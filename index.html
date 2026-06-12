@@ -1172,16 +1172,28 @@ function doPost(e) {
 
         // ----------------- CROSS-MONTH DYNAMIC INVENTORY FETCH -----------------
         function getEffectiveInitialStock(room, key) {
-            const rangeStart = new Date(filterStart);
+            const sParts = filterStart.split('-');
+            if (sParts.length !== 3) return initialStocks[room][key] || 0;
+            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
+            
             const records = db[room] || [];
             
             const priorRecords = records.filter(r => {
-                const rDate = new Date(r.date.replace(/\//g, '-'));
+                if (!r.date) return false;
+                const delimiter = r.date.includes('/') ? '/' : '-';
+                const rParts = r.date.split(delimiter);
+                if (rParts.length !== 3) return false;
+                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
                 return rDate < rangeStart;
             });
             
             if (priorRecords.length > 0) {
-                priorRecords.sort((a, b) => new Date(b.date.replace(/\//g, '-')) - new Date(a.date.replace(/\//g, '-')));
+                priorRecords.sort((a, b) => {
+                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
+                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
+                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
+                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
+                });
                 const latestPrior = priorRecords[0];
                 const balanceKey = `${key}_balance`;
                 if (latestPrior[balanceKey] !== undefined) {
@@ -1193,14 +1205,26 @@ function doPost(e) {
         }
 
         function isCrossMonth(room, key) {
-            const rangeStart = new Date(filterStart);
+            const sParts = filterStart.split('-');
+            if (sParts.length !== 3) return false;
+            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
+            
             const records = db[room] || [];
             const priorRecords = records.filter(r => {
-                const rDate = new Date(r.date.replace(/\//g, '-'));
+                if (!r.date) return false;
+                const delimiter = r.date.includes('/') ? '/' : '-';
+                const rParts = r.date.split(delimiter);
+                if (rParts.length !== 3) return false;
+                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
                 return rDate < rangeStart;
             });
             if (priorRecords.length > 0) {
-                priorRecords.sort((a, b) => new Date(b.date.replace(/\//g, '-')) - new Date(a.date.replace(/\//g, '-')));
+                priorRecords.sort((a, b) => {
+                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
+                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
+                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
+                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
+                });
                 const latestPrior = priorRecords[0];
                 return latestPrior[`${key}_balance`] !== undefined;
             }
@@ -1259,8 +1283,13 @@ function doPost(e) {
             const records = db[room];
             if (!records || records.length === 0) return;
 
-            // Sort dates from past to future
-            records.sort((a, b) => new Date(a.date.replace(/\//g, '-')) - new Date(b.date.replace(/\//g, '-')));
+            // Sort dates from past to future safely without timezone offset issues
+            records.sort((a, b) => {
+                const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
+                const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
+                return new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2])) - 
+                       new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2]));
+            });
 
             let lastStocks = {
                 Omnipaque: initialStocks[room]['Omnipaque'] !== undefined ? initialStocks[room]['Omnipaque'] : 0,
@@ -1448,19 +1477,17 @@ function doPost(e) {
             return dateObj >= sObj && dateObj <= eObj;
         }
 
+        // ----------------- INCOMPLETE FILL DETECTOR -----------------
         function getMissingRecords() {
             const missing = [];
+            // 解析使用者目前選取的試算表起訖日期
             let start = new Date(filterStart + 'T00:00:00');
             let end = new Date(filterEnd + 'T00:00:00');
-
-            let today = new Date();
-            today.setHours(0,0,0,0);
-            
-            let maxCheckDate = end < today ? end : today;
             let current = new Date(start);
 
-            while (current <= maxCheckDate) {
-                // Skip Sundays
+            // 嚴格檢索選取區間內的所有日期（不因 today 而截斷）
+            while (current <= end) {
+                // 自動過濾/排除星期日
                 if (current.getDay() === 0) {
                     current.setDate(current.getDate() + 1);
                     continue;
@@ -1469,7 +1496,6 @@ function doPost(e) {
                 const y = current.getFullYear();
                 const m = current.getMonth() + 1;
                 const d = current.getDate();
-                const formattedDateSlash = `${y}/${m}/${d}`;
                 const formattedDateSlashWithZero = `${y}/${m < 10 ? '0' + m : m}/${d < 10 ? '0' + d : d}`;
 
                 const rooms = ['RCT', '3FCT', '1FCT', 'vascular', 'special', 'IVP'];
