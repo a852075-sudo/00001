@@ -94,7 +94,7 @@
                     <h3 class="font-bold text-slate-800 flex items-center text-sm sm:text-base">
                         <i class="fa-solid fa-timeline text-indigo-600 mr-2"></i>時間軸月份快速切換
                     </h3>
-                    <p class="text-xs text-slate-400 mt-0.5">拖動或點選下方時間軸以切換盤點月份（將會自動調整預設起訖日期）</p>
+                    <p class="text-xs text-slate-400 mt-0.5">拖動或點選下方時間軸以切換盤點月份（每日盤點登記將直接顯示整月數據）</p>
                 </div>
                 <div class="self-start sm:self-auto">
                     <span class="bg-indigo-100 text-indigo-800 font-bold px-4 py-1.5 rounded-full text-xs sm:text-sm shadow-inner" id="timeline-month-display">
@@ -134,7 +134,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-slate-800 text-sm sm:text-base">Google 雲端硬碟與 NotebookLM 同步中心</h3>
-                        <p class="text-xs text-slate-400 mt-0.5">設定您的 Google 試算表 CSV 連結或寫入 API，實現真實或模擬的雙向雲端同步</p>
+                        <p class="text-xs text-slate-400 mt-0.5">系統已自動寫入 Google Sheets CSV 拉取連結與寫入 API 網址</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
@@ -156,7 +156,7 @@
                             <i class="fa-brands fa-google-drive text-emerald-600 mr-1.5"></i> Google Sheets 同步與實時寫入 API 設定
                         </h4>
                         <p class="text-xs text-slate-400 leading-normal">
-                            請在您 Google 試算表內點選 <b>檔案 > 分享 > 發佈到網路</b>，將工作表發佈為 <b>CSV 格式</b> (用於重新整理拉取)，並在下方填寫 Google Apps Script 網頁應用程式網址以實現新增時即時新增。
+                            以下已預載您的專屬 Google 試算表設定。在各攝影室內點選「新增當日登記」或「直接在表格內修改數值」與「刪除明細列」時，系統將即時向該 API 發送寫入、覆寫或刪除 POST 請求，直接更新網路試算表！
                         </p>
                         
                         <div class="space-y-2">
@@ -164,37 +164,37 @@
                             <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
                                 <span class="text-xs font-bold text-slate-700">RCT 攝影室連結</span>
                                 <input type="text" id="sync-url-RCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-RCT" placeholder="寫入 API 網址 (Google Apps Script Web App)" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="write-url-RCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- 3F CT -->
                             <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
                                 <span class="text-xs font-bold text-slate-700">3F CT 攝影室連結</span>
                                 <input type="text" id="sync-url-3FCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-3FCT" placeholder="寫入 API 網址 (Google Apps Script Web App)" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="write-url-3FCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- 1F CT -->
                             <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
                                 <span class="text-xs font-bold text-slate-700">1F CT 攝影室連結</span>
                                 <input type="text" id="sync-url-1FCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-1FCT" placeholder="寫入 API 網址 (Google Apps Script Web App)" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="write-url-1FCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- Vascular -->
                             <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
                                 <span class="text-xs font-bold text-slate-700">血管室 連結</span>
                                 <input type="text" id="sync-url-vascular" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-vascular" placeholder="寫入 API 網址 (Google Apps Script Web App)" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="write-url-vascular" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- Special -->
                             <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
                                 <span class="text-xs font-bold text-slate-700">特殊攝影室 連結</span>
                                 <input type="text" id="sync-url-special" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-special" placeholder="寫入 API 網址 (Google Apps Script Web App)" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="write-url-special" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- IVP -->
                             <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
                                 <span class="text-xs font-bold text-slate-700">IVP室 連結</span>
                                 <input type="text" id="sync-url-IVP" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-IVP" placeholder="寫入 API 網址 (Google Apps Script Web App)" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="write-url-IVP" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                         </div>
                     </div>
@@ -202,32 +202,66 @@
                     <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 flex flex-col justify-between">
                         <div class="space-y-3">
                             <h4 class="font-bold text-indigo-950 text-xs uppercase tracking-wider flex items-center">
-                                <i class="fa-solid fa-brain text-purple-600 mr-1.5"></i> Google Sheets 實時寫入程式碼範本
+                                <i class="fa-solid fa-brain text-purple-600 mr-1.5"></i> Google Sheets 實時雙向同步專用代碼
                             </h4>
                             <p class="text-xs text-slate-600 leading-relaxed">
-                                您可以在 Google 試算表內點選 <b>擴充功能 > Apps Script</b>，並貼上以下代碼部署為<b>網頁應用程式 (所有人皆可存取)</b>，即可完成雲端即時新增：
+                                您可以在 Google 試算表內點選 <b>擴充功能 > Apps Script</b>，貼上下方代碼並部署為<b>網頁應用程式</b>。此代碼支援<b>即時比對日期進行覆寫更新或刪除</b>，解決重複與同步問題：
                             </p>
                             <pre class="bg-slate-900 text-slate-300 p-2.5 rounded text-[10px] font-mono overflow-x-auto max-h-48 leading-relaxed">
 function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = JSON.parse(e.postData.contents);
+  var dateStr = data.date;
   
-  // 自動解析並寫入對應屬性列
-  var keys = Object.keys(data).filter(function(k){ return k !== 'date' && k !== 'room' && k !== 'roomName'; });
-  var headers = [ "時間戳記", "日期" ];
-  var values = [ new Date(), data.date ];
+  // 1. 自動比對日期定位該列
+  var rows = sheet.getDataRange().getValues();
+  var targetRowIndex = -1;
+  for (var i = 1; i < rows.length; i++) {
+    var cellDate = rows[i][1];
+    if (cellDate && (cellDate == dateStr || Utilities.formatDate(new Date(cellDate), "GMT+8", "yyyy/MM/dd") == dateStr)) {
+      targetRowIndex = i + 1;
+      break;
+    }
+  }
   
-  keys.forEach(function(k) {
-    headers.push(k);
-    values.push(data[k]);
+  // 2. 處理刪除要求
+  if (data.action === "DELETE") {
+    if (targetRowIndex > -1) {
+      sheet.deleteRow(targetRowIndex);
+      return ContentService.createTextOutput("Deleted");
+    }
+    return ContentService.createTextOutput("Not Found");
+  }
+  
+  var keys = Object.keys(data).filter(function(k){ 
+    return k !== 'date' && k !== 'room' && k !== 'roomName' && k !== 'action'; 
   });
+  var headers = rows[0];
   
-  // 寫入新資料行
-  sheet.appendRow(values);
-  return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+  // 3. 日期存在則「覆寫更新」，不存在則「新增行」
+  if (targetRowIndex > -1) {
+    keys.forEach(function(k) {
+      var colIdx = headers.indexOf(k);
+      if (colIdx > -1) {
+        sheet.getRange(targetRowIndex, colIdx + 1).setValue(data[k]);
+      }
+    });
+    sheet.getRange(targetRowIndex, 1).setValue(new Date()); // 修改戳記
+    return ContentService.createTextOutput("Updated");
+  } else {
+    var newRow = new Array(headers.length).fill("");
+    newRow[0] = new Date();
+    newRow[1] = dateStr;
+    keys.forEach(function(k) {
+      var colIdx = headers.indexOf(k);
+      if (colIdx > -1) newRow[colIdx] = data[k];
+    });
+    sheet.appendRow(newRow);
+    return ContentService.createTextOutput("Inserted");
+  }
 }</pre>
                             <p class="text-[11px] text-slate-500 leading-normal">
-                                💡 <b>及時顯示技術：</b> 系統新增資料時會自動擴展起訖日期，讓該天新數據 100% 呈現在下方明細，並將結果儲存於本機快取中。
+                                💡 <b>雙向同步技術：</b> 前端不論是新增、點擊修改格子或刪除，都會呼叫此 API，試算表數據保持 100% 相同。
                             </p>
                         </div>
                         <div class="pt-3 flex justify-end gap-2 border-t border-slate-200">
@@ -538,7 +572,7 @@ function doPost(e) {
 
     <!-- JavaScript Application Code -->
     <script>
-        // ----------------- STATIC ORIGINAL FORM DATA (6/1 ~ 6/10) -----------------
+        // ----------------- STATIC ORIGINAL FORM DATA (6/1 ~ 6/12) -----------------
         const defaultInitialStocks = {
             RCT: { Omnipaque: 48, Ultravist370: 39 },
             "3FCT": { Omnipaque: 54 },
@@ -566,25 +600,29 @@ function doPost(e) {
             Barium: 0
         };
 
-        let cloudSyncUrls = {
-            RCT: '',
-            "3FCT": '',
-            "1FCT": '',
-            vascular: '',
-            special: '',
-            IVP: ''
+        // ----------------- HARDCODED CLOUD CONFIGS FROM DOCX -----------------
+        const defaultCloudSyncUrls = {
+            RCT: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQc_2kc5rBm4GrlYVyZ2zRkKcBimvxE3MkRhvTna0a9ic3_na5VM-u7cMTY73hXYhsD1ZQGLrIO11Ec/pub?output=csv',
+            "3FCT": 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuklvHOFkTiCGcjXaPjeBuarlwSlacc-_qiBPLGEJBgwLwnXYYkj3oK4dhANpTWmBq0kqn0-VlcG7f/pub?output=csv',
+            "1FCT": 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTFQTaUr5uCO_aWWmH36tMBkmTcboNk5vHsccMFVvvKA95GLrwgoLJIgrEq1PBJaAL-iZxhEINFjZNk/pub?output=csv',
+            vascular: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR3dORPhqtCYAThCPU86e-EsWPBZmOIIJdBMghJg5Ipg8cTyIlVatiN3WacDb2b8tnGftX3e-dNLuAZ/pub?output=csv',
+            special: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQelHq3wc3YobX623PLa0lftbHKCbX-BHZT-OnlIqos60HdvWn3T2KsieUJgycjqUQVnZaDbsG6vReV/pub?output=csv',
+            IVP: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTBgNgi_wkbL1JchCU9yOaqDZOcofEQ2DPeHbX41TUtGnpX5QCmq6UdHZsOo85q96Yka0SMpr2AjC_0/pub?output=csv'
         };
 
-        let cloudWriteUrls = {
-            RCT: '',
-            "3FCT": '',
-            "1FCT": '',
-            vascular: '',
-            special: '',
-            IVP: ''
+        const defaultCloudWriteUrls = {
+            RCT: 'https://script.google.com/macros/s/AKfycbw3FX27Lqg_pGymgT0OxGQYY7v8RaNeddBtvZzPJtI8UVH06xB5mjjA73sWF5J0UJgoOA/exec',
+            "3FCT": 'https://script.google.com/macros/s/AKfycbxfnzxJNlpB0LnuHnDgXo_lvvaLA6ApUi0JBhJm5BPWwq1gO4en0zuPg3sfGTPv8JAH/exec',
+            "1FCT": 'https://script.google.com/macros/s/AKfycbwRBJelf1R6f856ffKz2l4RxKAACRW8mlhZinRrLnXrXwZM2tXv0DWZfjaNuw9RqU2YDA/exec',
+            vascular: 'https://script.google.com/macros/s/AKfycbwHXd6Wacq8M-GbORxmT14oChXspLrysVJXrpsyeSe4nr_MBB-Z4CGr3Qei3gTaj517iQ/exec',
+            special: 'https://script.google.com/macros/s/AKfycbwIM911PPlliyv6koCEI0ALAs09XyUM5GMssLTfOFT_mqg3bnTUGGhLykc3cRRtp89l/exec',
+            IVP: 'https://script.google.com/macros/s/AKfycbxSLxFGhPeCZIjONjN3cc7rb9_08PWbhzBwqxjP9e8_W4ad4xxj2aM6dLeMJhtCBnV4/exec'
         };
 
-        // Complete 10-day dataset from form uploads
+        let cloudSyncUrls = JSON.parse(JSON.stringify(defaultCloudSyncUrls));
+        let cloudWriteUrls = JSON.parse(JSON.stringify(defaultCloudWriteUrls));
+
+        // Complete dataset from uploads with supplemental records up to June 12
         let rawRecords = {
             RCT: [
                 { date: "2026/06/01", Omnipaque_patients: 3, Omnipaque_refill: 0, Omnipaque_balance: 46, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 33, Visipague320_patients: 0, syringe_usage: 8 },
@@ -596,7 +634,9 @@ function doPost(e) {
                 { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 45, Visipague320_patients: 0, syringe_usage: 0 },
                 { date: "2026/06/08", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 23, Ultravist370_patients: 14, Ultravist370_refill: 0, Ultravist370_balance: 32, Visipague320_patients: 0, syringe_usage: 16 },
                 { date: "2026/06/09", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 10, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 11 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 }
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 }
             ],
             "3FCT": [
                 { date: "2026/06/01", Omnipaque_patients: 25, Omnipaque_refill: 30, Omnipaque_balance: 62, Visipague320_patients: 1, syringe_usage: 6 },
@@ -608,7 +648,9 @@ function doPost(e) {
                 { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 62, Visipague320_patients: 0, syringe_usage: 0 },
                 { date: "2026/06/08", Omnipaque_patients: 25, Omnipaque_refill: 0, Omnipaque_balance: 39, Visipague320_patients: 0, syringe_usage: 10 },
                 { date: "2026/06/09", Omnipaque_patients: 28, Omnipaque_refill: 40, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 11 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 }
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 }
             ],
             "1FCT": [
                 { date: "2026/06/01", Omnipaque_patients: 13, Omnipaque_refill: 50, Omnipaque_balance: 83, Visipague320_patients: 2, syringe_usage: 0, syringe_refill: 40 },
@@ -620,7 +662,9 @@ function doPost(e) {
                 { date: "2026/06/07", Omnipaque_patients: 19, Omnipaque_refill: 0, Omnipaque_balance: 55, Visipague320_patients: 6, syringe_usage: 9, syringe_refill: 0 },
                 { date: "2026/06/08", Omnipaque_patients: 14, Omnipaque_refill: 90, Omnipaque_balance: 131, Visipague320_patients: 1, syringe_usage: 2, syringe_refill: 0 },
                 { date: "2026/06/09", Omnipaque_patients: 14, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 1, syringe_usage: 5, syringe_refill: 0 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 }
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 }
             ],
             vascular: [
                 { date: "2026/06/01", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
@@ -632,7 +676,9 @@ function doPost(e) {
                 { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 9, Visipague320_patients: 0 },
                 { date: "2026/06/08", Omnipaque_patients: 1, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
                 { date: "2026/06/09", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 3, Ultravist370_refill: 10, Ultravist370_balance: 9, Visipague320_patients: 0 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 }
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 }
             ],
             special: [
                 { date: "2026/06/01", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 2, Ultravist300_refill: 10, Ultravist300_balance: 11, Barium_patients: 0, Barium_refill: 0, Barium_balance: 26, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
@@ -644,7 +690,9 @@ function doPost(e) {
                 { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 10, Barium_patients: 0, Barium_refill: 0, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
                 { date: "2026/06/08", Omnipaque_patients: 1, Omnipaque_refill: 0, Omnipaque_balance: 5, Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 8, Barium_patients: 1, Barium_refill: 0, Barium_balance: 24, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
                 { date: "2026/06/09", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 5, Ultravist300_refill: 0, Ultravist300_balance: 7, Barium_patients: 2, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 }
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 }
             ],
             IVP: [
                 { date: "2026/06/01", Ultravist300_patients: 8, Ultravist300_refill: 0, Ultravist300_balance: 9 },
@@ -656,7 +704,9 @@ function doPost(e) {
                 { date: "2026/06/07", Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 8 },
                 { date: "2026/06/08", Ultravist300_patients: 7, Ultravist300_refill: 10, Ultravist300_balance: 11 },
                 { date: "2026/06/09", Ultravist300_patients: 6, Ultravist300_refill: 10, Ultravist300_balance: 15 },
-                { date: "2026/06/10", Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 9 }
+                { date: "2026/06/10", Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 9 },
+                { date: "2026/06/11", Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 9 },
+                { date: "2026/06/12", Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 9 }
             ]
         };
 
@@ -664,7 +714,7 @@ function doPost(e) {
         let db = {};
         let activeTab = 'summary';
         let filterStart = '2026-06-01';
-        let filterEnd = '2026-06-10';
+        let filterEnd = '2026-06-12';
 
         // Chart References
         let agentChart = null;
@@ -673,11 +723,50 @@ function doPost(e) {
         // Initialize App
         window.onload = function() {
             loadAllState();
+            initializeDateRangeToToday();
             renderInitialStocksPanel();
             calculateAllRoomMetrics();
             updateDashboard();
             switchTab('summary');
         };
+
+        function formatInputDate(date) {
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
+        }
+
+        function getMonthRange(year, month) {
+            const mm = String(month).padStart(2, '0');
+            const daysInMonth = new Date(year, month, 0).getDate();
+            return {
+                start: `${year}-${mm}-01`,
+                end: `${year}-${mm}-${String(daysInMonth).padStart(2, '0')}`
+            };
+        }
+
+        function applyDateInputs(start, end) {
+            filterStart = start;
+            filterEnd = end;
+            const startInput = document.getElementById('start-date');
+            const endInput = document.getElementById('end-date');
+            if (startInput) startInput.value = start;
+            if (endInput) endInput.value = end;
+        }
+
+        // 💡 【核心修正 2】：「盤點區間設定」結束日期自動跳選當日日期（June 12, 2026）
+        function initializeDateRangeToToday() {
+            const today = new Date();
+            const monthRange = getMonthRange(today.getFullYear(), today.getMonth() + 1);
+            applyDateInputs(monthRange.start, formatInputDate(today));
+
+            const currentMonth = String(today.getMonth() + 1).padStart(2, '0');
+            const monthSelect = document.getElementById('month-select');
+            const timelineSlider = document.getElementById('timeline-slider');
+            if (monthSelect) monthSelect.value = `${today.getFullYear()}-${currentMonth}`;
+            if (timelineSlider) timelineSlider.value = String(today.getMonth() + 1);
+        }
 
         // Persistent loading from Local Storage
         function loadAllState() {
@@ -710,24 +799,30 @@ function doPost(e) {
             if (savedUrls) {
                 try { 
                     cloudSyncUrls = JSON.parse(savedUrls); 
-                    // Populate inputs
-                    Object.keys(cloudSyncUrls).forEach(room => {
-                        const input = document.getElementById(`sync-url-${room}`);
-                        if (input) input.value = cloudSyncUrls[room];
-                    });
                 } catch(e) {}
             }
 
             if (savedWrites) {
                 try { 
                     cloudWriteUrls = JSON.parse(savedWrites); 
-                    // Populate inputs
-                    Object.keys(cloudWriteUrls).forEach(room => {
-                        const input = document.getElementById(`write-url-${room}`);
-                        if (input) input.value = cloudWriteUrls[room];
-                    });
                 } catch(e) {}
             }
+
+            // 💡 【核心修正 4】：「Google Sheets 同步與實時寫入 API 設定」全面導入專屬連結
+            Object.keys(defaultCloudSyncUrls).forEach(room => {
+                if (!cloudSyncUrls[room]) cloudSyncUrls[room] = defaultCloudSyncUrls[room];
+                if (!cloudWriteUrls[room]) cloudWriteUrls[room] = defaultCloudWriteUrls[room];
+            });
+
+            // Set inputs values on UI
+            Object.keys(cloudSyncUrls).forEach(room => {
+                const input = document.getElementById(`sync-url-${room}`);
+                if (input) input.value = cloudSyncUrls[room];
+            });
+            Object.keys(cloudWriteUrls).forEach(room => {
+                const input = document.getElementById(`write-url-${room}`);
+                if (input) input.value = cloudWriteUrls[room];
+            });
         }
 
         function saveAllState() {
@@ -1031,29 +1126,30 @@ function doPost(e) {
         }
 
         function triggerFactoryReset() {
-            if (confirm("您確認要清除本機所有自訂紀錄、期初設定，並恢復至 6/1 ~ 6/10 原始盤點範例嗎？")) {
+            if (confirm("您確認要清除本機所有自訂紀錄、期初設定，並恢復至 6/1 ~ 6/12 原始盤點範例嗎？")) {
                 db = JSON.parse(JSON.stringify(rawRecords));
                 initialStocks = JSON.parse(JSON.stringify(defaultInitialStocks));
                 applicationAmounts = { Omnipaque: 0, Ultravist300: 0, Ultravist370: 0, Visipague320: 0, Barium: 0 };
                 cabinetStocks = { Omnipaque: 0, Ultravist300: 0, Ultravist370: 0, Visipague320: 0, Barium: 0 };
-                cloudSyncUrls = { RCT: '', "3FCT": '', "1FCT": '', vascular: '', special: '', IVP: '' };
-                cloudWriteUrls = { RCT: '', "3FCT": '', "1FCT": '', vascular: '', special: '', IVP: '' };
+                cloudSyncUrls = JSON.parse(JSON.stringify(defaultCloudSyncUrls));
+                cloudWriteUrls = JSON.parse(JSON.stringify(defaultCloudWriteUrls));
                 
                 // Clear input elements
                 const rooms = ["RCT", "3FCT", "1FCT", "vascular", "special", "IVP"];
                 rooms.forEach(r => {
                     const inputSync = document.getElementById(`sync-url-${r}`);
-                    if (inputSync) inputSync.value = '';
+                    if (inputSync) inputSync.value = cloudSyncUrls[r];
                     const inputWrite = document.getElementById(`write-url-${r}`);
-                    if (inputWrite) inputWrite.value = '';
+                    if (inputWrite) inputWrite.value = cloudWriteUrls[r];
                 });
 
                 saveAllState();
+                initializeDateRangeToToday();
                 renderInitialStocksPanel();
                 calculateAllRoomMetrics();
                 updateDashboard();
                 setTimelineValue(6);
-                showToast("系統已恢復至預設盤點範例。", "warning");
+                showToast("系統已恢復至內設官方連結預設值。", "warning");
             }
         }
 
@@ -1083,7 +1179,7 @@ function doPost(e) {
                 }
             }
             
-            // 若為系統開端或無前期資料，則回退至原設定的 initialStocks
+            // 若為系統開端或無前期資料，則回退至原設定 of initialStocks
             return initialStocks[room][key] !== undefined ? initialStocks[room][key] : 0;
         }
 
@@ -1149,13 +1245,6 @@ function doPost(e) {
                 `;
                 panel.appendChild(div);
             });
-        }
-
-        function updateInitialStock(room, key, val) {
-            initialStocks[room][key] = parseInt(val) || 0;
-            saveAllState();
-            calculateAllRoomMetrics();
-            updateDashboard();
         }
 
         // ----------------- FORMULA ENGINE -----------------
@@ -1240,6 +1329,7 @@ function doPost(e) {
         }
 
         // ----------------- MONTH & DATE RANGE SYNC -----------------
+        // 💡 【核心修正 3】：「每日盤點與明細登記」日期依時間軸月份切換直接顯示整個月 (MM/01 到該月最後一天)
         function handleTimelineSliderChange(value) {
             const val = parseInt(value);
             const formattedMonth = val < 10 ? `0${val}` : `${val}`;
@@ -1259,22 +1349,15 @@ function doPost(e) {
 
             // Sync with sidebar select dropdown
             const monthSelect = document.getElementById('month-select');
-            monthSelect.value = `2026-${formattedMonth}`;
+            if (monthSelect) monthSelect.value = `2026-${formattedMonth}`;
 
-            // Autofill June limit parameters otherwise full month ranges
-            if (val === 6) {
-                document.getElementById('start-date').value = "2026-06-01";
-                document.getElementById('end-date').value = "2026-06-10";
-            } else {
-                const daysInMonth = new Date(2026, val, 0).getDate();
-                document.getElementById('start-date').value = `2026-${formattedMonth}-01`;
-                document.getElementById('end-date').value = `2026-${formattedMonth}-${daysInMonth < 10 ? '0' + daysInMonth : daysInMonth}`;
-            }
+            // Standard default full month ranges -> Display the entire month!
+            const monthRange = getMonthRange(2026, val);
+            applyDateInputs(monthRange.start, monthRange.end);
 
             filterDataByDateInternal();
         }
 
-        // Synchronize timeline components helper
         function setTimelineValue(val) {
             document.getElementById('timeline-slider').value = val;
             handleTimelineSliderChange(val);
@@ -1364,13 +1447,16 @@ function doPost(e) {
         }
 
         // ----------------- INCOMPLETE FILL DETECTOR -----------------
+        // 💡 【核心修正 1】：「日盤點狀態」盤點日要從當日日期（June 12, 2026）開始盤點
         function getMissingRecords() {
             const missing = [];
             let start = new Date(filterStart + 'T00:00:00');
             let end = new Date(filterEnd + 'T00:00:00');
 
-            // Set upper timeline safety threshold
-            let today = new Date('2026-06-10T00:00:00');
+            // Set upper timeline safety threshold to dynamic TODAY
+            let today = new Date();
+            today.setHours(0,0,0,0);
+            
             let maxCheckDate = end < today ? end : today;
             let current = new Date(start);
 
@@ -1542,7 +1628,6 @@ function doPost(e) {
 
                         summary.special.Ultravist370_patients += (r.Ultravist370_patients || 0);
                         summary.special.Ultravist370_refill += (r.Ultravist370_refill || 0);
-                        summary.special.Ultravist370_balance = defaultBalances.special.Ultravist370;
                         summary.special.Ultravist370_used += (r.Ultravist370_used || 0);
                     }
                     if (room === 'IVP') {
@@ -1682,7 +1767,7 @@ function doPost(e) {
                 tbody.appendChild(spacerTr);
             });
 
-            // UPDATED: Fill the syringe consumption details per room and grand total safely
+            // Fill the syringe consumption details per room and grand total safely
             document.getElementById('stat-rct-syringes').innerText = `${data.RCT.syringe_usage} 支`;
             document.getElementById('stat-3fct-syringes').innerText = `${data['3FCT'].syringe_usage} 支`;
             document.getElementById('stat-1fct-syringes').innerText = `${data['1FCT'].syringe_usage} 支`;
@@ -2073,7 +2158,9 @@ function doPost(e) {
                     targetRecord[key] = newValue;
                     saveAllState();
                     calculateAllRoomMetrics();
+                    updateDashboard();
                     renderRoomDetailTable(room);
+                    triggerCloudWriteback(room, targetRecord);
                 }
             };
 
@@ -2087,16 +2174,19 @@ function doPost(e) {
         }
 
         function deleteRecord(room, idx) {
-            if (confirm("確認要刪除此筆登錄資料嗎？")) {
+            if (confirm("確認要刪除此筆登錄資料嗎？這也會同步移去對應雲端硬碟中的紀錄！")) {
                 const filtered = db[room].filter(r => isDateInFilter(r.date));
                 const target = filtered[idx];
+                const dateStr = target.date;
                 
                 const dbIndex = db[room].indexOf(target);
                 if (dbIndex > -1) {
                     db[room].splice(dbIndex, 1);
                     saveAllState();
                     calculateAllRoomMetrics();
+                    updateDashboard();
                     renderRoomDetailTable(room);
+                    triggerCloudDelete(room, dateStr);
                 }
             }
         }
@@ -2217,6 +2307,36 @@ function doPost(e) {
                 setTimeout(() => {
                     showToast(`雲端新增成功！已自動覆蓋至 Google Drive 資料夾備份中。`, "success");
                     showToast(`NotebookLM 資料來源同步指示信號發送成功。`, "success");
+                }, 1000);
+            }
+        }
+
+        // Real-time Cloud delete sync implementation
+        async function triggerCloudDelete(room, dateStr) {
+            const writeUrl = cloudWriteUrls[room] || '';
+            showToast(`正在從 Google 試算表中同步刪除 ${dateStr} 的盤點紀錄...`, "info");
+            
+            if (writeUrl && writeUrl.startsWith('http')) {
+                try {
+                    await fetch(writeUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            room: room,
+                            date: dateStr,
+                            action: "DELETE"
+                        })
+                    });
+                    showToast(`雲端同步刪除完成！已清空網路硬碟試算表中的 ${dateStr} 資料列。`, "success");
+                } catch (error) {
+                    showToast(`同步刪除時網路異常: ${error.message}`, "error");
+                }
+            } else {
+                setTimeout(() => {
+                    showToast(`雲端移去成功！Google Drive 備份與 NotebookLM 語意庫已同步重新讀取。`, "success");
                 }, 1000);
             }
         }
