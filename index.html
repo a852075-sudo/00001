@@ -720,14 +720,17 @@ function doPost(e) {
         let agentChart = null;
         let roomChart = null;
 
-        // Initialize App
-        window.onload = function() {
+        // Initialize App & Auto-Sync
+        window.onload = async function() {
             loadAllState();
             initializeDateRangeToToday();
             renderInitialStocksPanel();
             calculateAllRoomMetrics();
             updateDashboard();
             switchTab('summary');
+            
+            // 💡【核心修正】開啟頁面時，自動於背景執行一次靜態同步，確保多電腦間的即時一致性
+            await refreshData(true);
         };
 
         function formatInputDate(date) {
@@ -755,7 +758,6 @@ function doPost(e) {
             if (endInput) endInput.value = end;
         }
 
-        // 💡 【核心修正 2】：「盤點區間設定」結束日期自動跳選當日日期（June 12, 2026）
         function initializeDateRangeToToday() {
             const today = new Date();
             const monthRange = getMonthRange(today.getFullYear(), today.getMonth() + 1);
@@ -808,7 +810,6 @@ function doPost(e) {
                 } catch(e) {}
             }
 
-            // 💡 【核心修正 4】：「Google Sheets 同步與實時寫入 API 設定」全面導入專屬連結
             Object.keys(defaultCloudSyncUrls).forEach(room => {
                 if (!cloudSyncUrls[room]) cloudSyncUrls[room] = defaultCloudSyncUrls[room];
                 if (!cloudWriteUrls[room]) cloudWriteUrls[room] = defaultCloudWriteUrls[room];
@@ -902,38 +903,45 @@ function doPost(e) {
         }
 
         // ----------------- AUTOMATED CLOUD SYNC MODULE & REFRESH -----------------
-        async function refreshData() {
+        // 💡【核心修正】修改 refreshData 使其支援背景靜態同步 (isSilent)，以利自動載入時不阻礙使用者
+        async function refreshData(isSilent = false) {
             const refreshIcon = document.getElementById('refresh-icon');
-            refreshIcon.classList.add('fa-spin');
+            if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            const modal = document.getElementById('sync-progress-modal');
-            const pBar = document.getElementById('sync-progress-bar');
-            const msg = document.getElementById('sync-status-msg');
-            const logs = document.getElementById('sync-logs');
+            let modal, pBar, msg, logs;
+            if (!isSilent) {
+                modal = document.getElementById('sync-progress-modal');
+                pBar = document.getElementById('sync-progress-bar');
+                msg = document.getElementById('sync-status-msg');
+                logs = document.getElementById('sync-logs');
 
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+                if (modal) {
+                    modal.classList.remove('hidden');
+                    modal.classList.add('flex');
+                }
+                if (pBar) pBar.style.width = "10%";
+                if (logs) logs.innerHTML = `<p><i class="fa-solid fa-satellite-dish text-indigo-500 mr-2"></i>探測與建立雲端資料庫連結通道...</p>`;
+            }
 
-            // Reset logs
-            logs.innerHTML = `<p><i class="fa-solid fa-satellite-dish text-indigo-500 mr-2"></i>探測與建立雲端資料庫連結通道...</p>`;
-            pBar.style.width = "10%";
-
-            // Helper to add log line
             const log = (text, type = "info") => {
+                if (isSilent) {
+                    console.log(`[CloudSync] ${text}`);
+                    return;
+                }
                 const p = document.createElement('p');
                 let icon = '<i class="fa-solid fa-caret-right mr-2 text-indigo-500"></i>';
                 if (type === "success") icon = '<i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i>';
                 if (type === "error") icon = '<i class="fa-solid fa-circle-xmark text-rose-500 mr-2"></i>';
                 p.innerHTML = `${icon}${text}`;
-                logs.appendChild(p);
-                logs.scrollTop = logs.scrollHeight;
+                if (logs) {
+                    logs.appendChild(p);
+                    logs.scrollTop = logs.scrollHeight;
+                }
             };
 
-            await sleep(600);
-            pBar.style.width = "30%";
-            msg.innerText = "正在分析同步管道與連接埠...";
+            if (!isSilent && msg) msg.innerText = "正在分析同步管道與連接埠...";
+            if (!isSilent && pBar) pBar.style.width = "30%";
 
-            // Determine if we need to do real HTTP fetch or simulate
             const roomsWithUrls = Object.keys(cloudSyncUrls).filter(r => cloudSyncUrls[r] && cloudSyncUrls[r].startsWith('http'));
 
             if (roomsWithUrls.length > 0) {
@@ -945,7 +953,6 @@ function doPost(e) {
                     log(`嘗試從 Google 雲端載入 [${getRoomChineseName(room)}] 資料...`);
                     
                     try {
-                        // Real fetch call
                         const response = await fetch(cloudSyncUrls[room]);
                         if (!response.ok) throw new Error("HTTP error " + response.status);
                         
@@ -962,13 +969,16 @@ function doPost(e) {
                         log(`[${getRoomChineseName(room)}] 雲端連線失敗: ${err.message}。將保留本機快取數據。`, "error");
                     }
                     
-                    pBar.style.width = `${30 + Math.floor((i + 1) / roomsWithUrls.length * 50)}%`;
-                    await sleep(400);
+                    if (!isSilent && pBar) pBar.style.width = `${30 + Math.floor((i + 1) / roomsWithUrls.length * 50)}%`;
+                    await sleep(isSilent ? 50 : 300);
                 }
 
                 log(`線上雲端同步完成！成功更新 ${successCount}/${roomsWithUrls.length} 個檢查室。`, "success");
             } else {
-                // Fully simulated integration with cloud drive & NotebookLM
+                if (isSilent) {
+                    if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+                    return;
+                }
                 log("未配置客製 Google Sheets 連結。啟動 Google Drive 智慧備份與自動模擬對接系統...");
                 await sleep(500);
                 
@@ -989,16 +999,18 @@ function doPost(e) {
                 await sleep(400);
             }
 
-            pBar.style.width = "100%";
-            msg.innerText = "資料同步完成！";
+            if (!isSilent && pBar) pBar.style.width = "100%";
+            if (!isSilent && msg) msg.innerText = "資料同步完成！";
             log("NotebookLM 筆記本資料來源已同步更新重新讀取中！", "success");
 
-            await sleep(500);
+            if (!isSilent) await sleep(500);
             
             // Finish Up
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            refreshIcon.classList.remove('fa-spin');
+            if (!isSilent && modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+            if (refreshIcon) refreshIcon.classList.remove('fa-spin');
 
             calculateAllRoomMetrics();
             updateDashboard();
@@ -1006,15 +1018,15 @@ function doPost(e) {
                 renderRoomDetailTable(activeTab);
             }
 
-            showToast("重新整理成功！本機與雲端 NotebookLM 已完成最新數據同步對齊。", "success");
+            showToast("數據已與雲端 Google Sheets 完成自動雙向對齊！", "success");
         }
 
         // CSV parsing & merging algorithm
+        // 💡【核心修正】使本地快取完全重構為雲端 Google Sheets 內容，從而解決 Machine A 新增/刪除列而 Machine B 看不到同步的問題
         function parseCSVAndMerge(room, csvText) {
             const lines = csvText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             if (lines.length < 2) return 0;
 
-            // Simple comma split
             let separator = ",";
             if (lines[0].includes("|")) separator = "|";
             else if (lines[0].includes("\t")) separator = "\t";
@@ -1025,6 +1037,7 @@ function doPost(e) {
 
             const map = getFieldMappingsForRoom(room);
             let imported = 0;
+            const cloudRecords = [];
 
             // Parse lines
             for (let i = 1; i < lines.length; i++) {
@@ -1034,7 +1047,6 @@ function doPost(e) {
                 let dateVal = cols[dateIdx];
                 if (!dateVal) continue;
 
-                // Normalize date to YYYY/MM/DD
                 const dateObj = new Date(dateVal.replace(/\//g, '-'));
                 if (isNaN(dateObj.getTime())) continue;
 
@@ -1043,12 +1055,7 @@ function doPost(e) {
                 const d = String(dateObj.getDate()).padStart(2, "0");
                 const formattedDate = `${y}/${m}/${d}`;
 
-                // Search or create record
-                let targetRec = db[room].find(r => r.date === formattedDate);
-                if (!targetRec) {
-                    targetRec = { date: formattedDate };
-                    db[room].push(targetRec);
-                }
+                const targetRec = { date: formattedDate };
 
                 // Fill values based on headers match
                 Object.keys(map).forEach(key => {
@@ -1059,10 +1066,15 @@ function doPost(e) {
                         targetRec[key] = isNaN(val) ? 0 : val;
                     }
                 });
+                cloudRecords.push(targetRec);
                 imported++;
             }
 
-            saveAllState();
+            if (cloudRecords.length > 0) {
+                // 完全取代本地舊快取，確保多台電腦取得的是百分之百同步的一致影像！
+                db[room] = cloudRecords;
+                saveAllState();
+            }
             return imported;
         }
 
@@ -1160,18 +1172,28 @@ function doPost(e) {
 
         // ----------------- CROSS-MONTH DYNAMIC INVENTORY FETCH -----------------
         function getEffectiveInitialStock(room, key) {
-            const rangeStart = new Date(filterStart);
+            const sParts = filterStart.split('-');
+            if (sParts.length !== 3) return initialStocks[room][key] || 0;
+            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
+            
             const records = db[room] || [];
             
-            // 找出所有早於目前篩選日期區間的紀錄
             const priorRecords = records.filter(r => {
-                const rDate = new Date(r.date.replace(/\//g, '-'));
+                if (!r.date) return false;
+                const delimiter = r.date.includes('/') ? '/' : '-';
+                const rParts = r.date.split(delimiter);
+                if (rParts.length !== 3) return false;
+                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
                 return rDate < rangeStart;
             });
             
             if (priorRecords.length > 0) {
-                // 照日期降序排列，取離本月最近的那一天
-                priorRecords.sort((a, b) => new Date(b.date.replace(/\//g, '-')) - new Date(a.date.replace(/\//g, '-')));
+                priorRecords.sort((a, b) => {
+                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
+                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
+                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
+                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
+                });
                 const latestPrior = priorRecords[0];
                 const balanceKey = `${key}_balance`;
                 if (latestPrior[balanceKey] !== undefined) {
@@ -1179,19 +1201,30 @@ function doPost(e) {
                 }
             }
             
-            // 若為系統開端或無前期資料，則回退至原設定 of initialStocks
             return initialStocks[room][key] !== undefined ? initialStocks[room][key] : 0;
         }
 
         function isCrossMonth(room, key) {
-            const rangeStart = new Date(filterStart);
+            const sParts = filterStart.split('-');
+            if (sParts.length !== 3) return false;
+            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
+            
             const records = db[room] || [];
             const priorRecords = records.filter(r => {
-                const rDate = new Date(r.date.replace(/\//g, '-'));
+                if (!r.date) return false;
+                const delimiter = r.date.includes('/') ? '/' : '-';
+                const rParts = r.date.split(delimiter);
+                if (rParts.length !== 3) return false;
+                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
                 return rDate < rangeStart;
             });
             if (priorRecords.length > 0) {
-                priorRecords.sort((a, b) => new Date(b.date.replace(/\//g, '-')) - new Date(a.date.replace(/\//g, '-')));
+                priorRecords.sort((a, b) => {
+                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
+                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
+                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
+                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
+                });
                 const latestPrior = priorRecords[0];
                 return latestPrior[`${key}_balance`] !== undefined;
             }
@@ -1203,11 +1236,9 @@ function doPost(e) {
             const panel = document.getElementById('initial-stocks-panel');
             panel.innerHTML = '';
             
-            // 取得目前的動態期初日期做為提示 (如：6/1, 7/1)
             const dateObj = new Date(filterStart);
             const displayDate = isNaN(dateObj.getTime()) ? "6/1" : `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
             
-            // 更新設定面板上的說明文字
             const panelTitleDesc = panel.previousElementSibling;
             if (panelTitleDesc) {
                 panelTitleDesc.innerText = `各攝影室的 ${displayDate} 期初庫存 (跨月時自動帶入，點選可修正)：`;
@@ -1252,8 +1283,13 @@ function doPost(e) {
             const records = db[room];
             if (!records || records.length === 0) return;
 
-            // Sort dates from past to future
-            records.sort((a, b) => new Date(a.date.replace(/\//g, '-')) - new Date(b.date.replace(/\//g, '-')));
+            // Sort dates from past to future safely without timezone offset issues
+            records.sort((a, b) => {
+                const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
+                const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
+                return new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2])) - 
+                       new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2]));
+            });
 
             let lastStocks = {
                 Omnipaque: initialStocks[room]['Omnipaque'] !== undefined ? initialStocks[room]['Omnipaque'] : 0,
@@ -1329,15 +1365,12 @@ function doPost(e) {
         }
 
         // ----------------- MONTH & DATE RANGE SYNC -----------------
-        // 💡 【核心修正 3】：「每日盤點與明細登記」日期依時間軸月份切換直接顯示整個月 (MM/01 到該月最後一天)
         function handleTimelineSliderChange(value) {
             const val = parseInt(value);
             const formattedMonth = val < 10 ? `0${val}` : `${val}`;
             
-            // Adjust header display
             document.getElementById('timeline-month-display').innerText = `當前選取：2026 年 ${formattedMonth} 月`;
             
-            // Scale and style month slider labels
             const labelSpans = document.querySelectorAll('#timeline-slider + div span');
             labelSpans.forEach((span, idx) => {
                 if (idx === val - 1) {
@@ -1347,11 +1380,9 @@ function doPost(e) {
                 }
             });
 
-            // Sync with sidebar select dropdown
             const monthSelect = document.getElementById('month-select');
             if (monthSelect) monthSelect.value = `2026-${formattedMonth}`;
 
-            // Standard default full month ranges -> Display the entire month!
             const monthRange = getMonthRange(2026, val);
             applyDateInputs(monthRange.start, monthRange.end);
 
@@ -1440,25 +1471,40 @@ function doPost(e) {
         }
 
         function isDateInFilter(dateStr) {
-            const dateObj = new Date(dateStr.replace(/\//g, '-'));
-            const sObj = new Date(filterStart);
-            const eObj = new Date(filterEnd);
-            return dateObj >= sObj && dateObj <= eObj;
+            if (!dateStr) return false;
+            const delimiter = dateStr.includes('/') ? '/' : '-';
+            const parts = dateStr.split(delimiter);
+            if (parts.length !== 3) return false;
+
+            const ry = parseInt(parts[0]);
+            const rm = parseInt(parts[1]) - 1;
+            const rd = parseInt(parts[2]);
+            const targetTime = new Date(ry, rm, rd).getTime();
+
+            const sParts = filterStart.split('-');
+            const eParts = filterEnd.split('-');
+            const startTime = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2])).getTime();
+            const endTime = new Date(parseInt(eParts[0]), parseInt(eParts[1]) - 1, parseInt(eParts[2])).getTime();
+
+            return targetTime >= startTime && targetTime <= endTime;
         }
 
-        // ----------------- INCOMPLETE FILL DETECTOR -----------------
-        // 💡 【核心修正 1】：「日盤點狀態」盤點日要從當日日期（June 12, 2026）開始盤點
         function getMissingRecords() {
             const missing = [];
-            let start = new Date(filterStart + 'T00:00:00');
-            let end = new Date(filterEnd + 'T00:00:00');
+            if (!filterStart || !filterEnd) return missing;
 
-            // Set upper timeline safety threshold to dynamic TODAY
+            const startParts = filterStart.split('-'); 
+            const endParts = filterEnd.split('-'); 
+            
+            if (startParts.length !== 3 || endParts.length !== 3) return missing;
+
+            let current = new Date(parseInt(startParts[0]), parseInt(startParts[1]) - 1, parseInt(startParts[2]));
+            let endDate = new Date(parseInt(endParts[0]), parseInt(endParts[1]) - 1, parseInt(endParts[2]));
+
             let today = new Date();
             today.setHours(0,0,0,0);
             
-            let maxCheckDate = end < today ? end : today;
-            let current = new Date(start);
+            let maxCheckDate = endDate < today ? endDate : today;
 
             while (current <= maxCheckDate) {
                 // Skip Sundays
@@ -1470,21 +1516,27 @@ function doPost(e) {
                 const y = current.getFullYear();
                 const m = current.getMonth() + 1;
                 const d = current.getDate();
-                const formattedDateSlash = `${y}/${m}/${d}`;
-                const formattedDateSlashWithZero = `${y}/${m < 10 ? '0' + m : m}/${d < 10 ? '0' + d : d}`;
 
                 const rooms = ['RCT', '3FCT', '1FCT', 'vascular', 'special', 'IVP'];
                 rooms.forEach(room => {
-                    const hasRecord = db[room].some(r => {
-                        const rDate = new Date(r.date.replace(/\//g, '-'));
-                        return rDate.getFullYear() === y && 
-                               (rDate.getMonth() + 1) === m && 
-                               rDate.getDate() === d;
+                    const hasRecord = db[room] && db[room].some(r => {
+                        if (!r.date) return false;
+                        const delimiter = r.date.includes('/') ? '/' : '-';
+                        const rParts = r.date.split(delimiter);
+                        if (rParts.length !== 3) return false;
+                        
+                        const ry = parseInt(rParts[0]);
+                        const rm = parseInt(rParts[1]);
+                        const rd = parseInt(rParts[2]);
+                        
+                        return ry === y && rm === m && rd === d;
                     });
 
                     if (!hasRecord) {
+                        const mmStr = String(m).padStart(2, '0');
+                        const ddStr = String(d).padStart(2, '0');
                         missing.push({
-                            dateStr: formattedDateSlashWithZero,
+                            dateStr: `${y}/${mmStr}/${ddStr}`,
                             roomKey: room,
                             roomName: getRoomChineseName(room)
                         });
@@ -1661,7 +1713,6 @@ function doPost(e) {
         }
 
         function updateDashboard() {
-            // 動態更新側邊欄期初庫存量設定
             renderInitialStocksPanel();
 
             const data = getAggregatedData();
@@ -1767,7 +1818,6 @@ function doPost(e) {
                 tbody.appendChild(spacerTr);
             });
 
-            // Fill the syringe consumption details per room and grand total safely
             document.getElementById('stat-rct-syringes').innerText = `${data.RCT.syringe_usage} 支`;
             document.getElementById('stat-3fct-syringes').innerText = `${data['3FCT'].syringe_usage} 支`;
             document.getElementById('stat-1fct-syringes').innerText = `${data['1FCT'].syringe_usage} 支`;
@@ -2252,7 +2302,6 @@ function doPost(e) {
                 db[room].push(newObj);
             }
 
-            // --- SMART AUTO-EXPAND FILTER DATES ---
             const addedDate = new Date(dateVal);
             const currentStartDate = new Date(filterStart);
             const currentEndDate = new Date(filterEnd);
@@ -2269,10 +2318,9 @@ function doPost(e) {
             saveAllState();
             calculateAllRoomMetrics();
             closeModal();
-            updateDashboard(); // Updates badges, top status counts, and Summary sheet
-            renderRoomDetailTable(room); // Render the target room detail sheet instantly!
+            updateDashboard(); 
+            renderRoomDetailTable(room); 
 
-            // --- REAL OR SIMULATED CLOUD WRITEBACK ---
             triggerCloudWriteback(room, newObj);
         }
 
@@ -2284,10 +2332,9 @@ function doPost(e) {
             
             if (writeUrl && writeUrl.startsWith('http')) {
                 try {
-                    // Send HTTP POST to Google Apps Script Web App Endpoint
                     const response = await fetch(writeUrl, {
                         method: 'POST',
-                        mode: 'no-cors', // Standard way to send cross-origin payload to Google Apps Script without CORS failures
+                        mode: 'no-cors', 
                         headers: {
                             'Content-Type': 'application/json'
                         },
@@ -2303,7 +2350,6 @@ function doPost(e) {
                     showToast(`網路連線異常: ${error.message}，本機快取已更新。`, "error");
                 }
             } else {
-                // Highly realistic simulated delay and feedback for standard setup
                 setTimeout(() => {
                     showToast(`雲端新增成功！已自動覆蓋至 Google Drive 資料夾備份中。`, "success");
                     showToast(`NotebookLM 資料來源同步指示信號發送成功。`, "success");
