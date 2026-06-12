@@ -1172,28 +1172,16 @@ function doPost(e) {
 
         // ----------------- CROSS-MONTH DYNAMIC INVENTORY FETCH -----------------
         function getEffectiveInitialStock(room, key) {
-            const sParts = filterStart.split('-');
-            if (sParts.length !== 3) return initialStocks[room][key] || 0;
-            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
-            
+            const rangeStart = new Date(filterStart);
             const records = db[room] || [];
             
             const priorRecords = records.filter(r => {
-                if (!r.date) return false;
-                const delimiter = r.date.includes('/') ? '/' : '-';
-                const rParts = r.date.split(delimiter);
-                if (rParts.length !== 3) return false;
-                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
+                const rDate = new Date(r.date.replace(/\//g, '-'));
                 return rDate < rangeStart;
             });
             
             if (priorRecords.length > 0) {
-                priorRecords.sort((a, b) => {
-                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
-                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
-                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
-                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
-                });
+                priorRecords.sort((a, b) => new Date(b.date.replace(/\//g, '-')) - new Date(a.date.replace(/\//g, '-')));
                 const latestPrior = priorRecords[0];
                 const balanceKey = `${key}_balance`;
                 if (latestPrior[balanceKey] !== undefined) {
@@ -1205,26 +1193,14 @@ function doPost(e) {
         }
 
         function isCrossMonth(room, key) {
-            const sParts = filterStart.split('-');
-            if (sParts.length !== 3) return false;
-            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
-            
+            const rangeStart = new Date(filterStart);
             const records = db[room] || [];
             const priorRecords = records.filter(r => {
-                if (!r.date) return false;
-                const delimiter = r.date.includes('/') ? '/' : '-';
-                const rParts = r.date.split(delimiter);
-                if (rParts.length !== 3) return false;
-                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
+                const rDate = new Date(r.date.replace(/\//g, '-'));
                 return rDate < rangeStart;
             });
             if (priorRecords.length > 0) {
-                priorRecords.sort((a, b) => {
-                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
-                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
-                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
-                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
-                });
+                priorRecords.sort((a, b) => new Date(b.date.replace(/\//g, '-')) - new Date(a.date.replace(/\//g, '-')));
                 const latestPrior = priorRecords[0];
                 return latestPrior[`${key}_balance`] !== undefined;
             }
@@ -1283,13 +1259,8 @@ function doPost(e) {
             const records = db[room];
             if (!records || records.length === 0) return;
 
-            // Sort dates from past to future safely without timezone offset issues
-            records.sort((a, b) => {
-                const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
-                const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
-                return new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2])) - 
-                       new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2]));
-            });
+            // Sort dates from past to future
+            records.sort((a, b) => new Date(a.date.replace(/\//g, '-')) - new Date(b.date.replace(/\//g, '-')));
 
             let lastStocks = {
                 Omnipaque: initialStocks[room]['Omnipaque'] !== undefined ? initialStocks[room]['Omnipaque'] : 0,
@@ -1471,40 +1442,22 @@ function doPost(e) {
         }
 
         function isDateInFilter(dateStr) {
-            if (!dateStr) return false;
-            const delimiter = dateStr.includes('/') ? '/' : '-';
-            const parts = dateStr.split(delimiter);
-            if (parts.length !== 3) return false;
-
-            const ry = parseInt(parts[0]);
-            const rm = parseInt(parts[1]) - 1;
-            const rd = parseInt(parts[2]);
-            const targetTime = new Date(ry, rm, rd).getTime();
-
-            const sParts = filterStart.split('-');
-            const eParts = filterEnd.split('-');
-            const startTime = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2])).getTime();
-            const endTime = new Date(parseInt(eParts[0]), parseInt(eParts[1]) - 1, parseInt(eParts[2])).getTime();
-
-            return targetTime >= startTime && targetTime <= endTime;
+            const dateObj = new Date(dateStr.replace(/\//g, '-'));
+            const sObj = new Date(filterStart);
+            const eObj = new Date(filterEnd);
+            return dateObj >= sObj && dateObj <= eObj;
         }
 
         function getMissingRecords() {
             const missing = [];
-            if (!filterStart || !filterEnd) return missing;
-
-            const startParts = filterStart.split('-'); 
-            const endParts = filterEnd.split('-'); 
-            
-            if (startParts.length !== 3 || endParts.length !== 3) return missing;
-
-            let current = new Date(parseInt(startParts[0]), parseInt(startParts[1]) - 1, parseInt(startParts[2]));
-            let endDate = new Date(parseInt(endParts[0]), parseInt(endParts[1]) - 1, parseInt(endParts[2]));
+            let start = new Date(filterStart + 'T00:00:00');
+            let end = new Date(filterEnd + 'T00:00:00');
 
             let today = new Date();
             today.setHours(0,0,0,0);
             
-            let maxCheckDate = endDate < today ? endDate : today;
+            let maxCheckDate = end < today ? end : today;
+            let current = new Date(start);
 
             while (current <= maxCheckDate) {
                 // Skip Sundays
@@ -1516,27 +1469,21 @@ function doPost(e) {
                 const y = current.getFullYear();
                 const m = current.getMonth() + 1;
                 const d = current.getDate();
+                const formattedDateSlash = `${y}/${m}/${d}`;
+                const formattedDateSlashWithZero = `${y}/${m < 10 ? '0' + m : m}/${d < 10 ? '0' + d : d}`;
 
                 const rooms = ['RCT', '3FCT', '1FCT', 'vascular', 'special', 'IVP'];
                 rooms.forEach(room => {
-                    const hasRecord = db[room] && db[room].some(r => {
-                        if (!r.date) return false;
-                        const delimiter = r.date.includes('/') ? '/' : '-';
-                        const rParts = r.date.split(delimiter);
-                        if (rParts.length !== 3) return false;
-                        
-                        const ry = parseInt(rParts[0]);
-                        const rm = parseInt(rParts[1]);
-                        const rd = parseInt(rParts[2]);
-                        
-                        return ry === y && rm === m && rd === d;
+                    const hasRecord = db[room].some(r => {
+                        const rDate = new Date(r.date.replace(/\//g, '-'));
+                        return rDate.getFullYear() === y && 
+                               (rDate.getMonth() + 1) === m && 
+                               rDate.getDate() === d;
                     });
 
                     if (!hasRecord) {
-                        const mmStr = String(m).padStart(2, '0');
-                        const ddStr = String(d).padStart(2, '0');
                         missing.push({
-                            dateStr: `${y}/${mmStr}/${ddStr}`,
+                            dateStr: formattedDateSlashWithZero,
                             roomKey: room,
                             roomName: getRoomChineseName(room)
                         });
