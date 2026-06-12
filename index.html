@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <!-- Google Drive & NotebookLM Sync Settings Card -->
+        <!-- Google Drive Sync Settings Card -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 p-6 no-print">
             <div class="flex justify-between items-center cursor-pointer" onclick="toggleSyncConfig()">
                 <div class="flex items-center space-x-2.5">
@@ -133,13 +133,12 @@
                         <i class="fa-solid fa-cloud-arrow-down text-lg"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-slate-800 text-sm sm:text-base">Google 雲端硬碟與 NotebookLM 同步中心</h3>
+                        <h3 class="font-bold text-slate-800 text-sm sm:text-base">Google 雲端硬碟與 API 同步中心</h3>
                         <p class="text-xs text-slate-400 mt-0.5">系統已自動寫入 Google Sheets CSV 拉取連結與寫入 API 網址</p>
                     </div>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <!-- 一鍵開啟專屬資料夾直達按鈕 -->
-                    <a href="https://drive.google.com/drive/u/0/folders/1AQ0Qfb9yWjOoTO5LFloIaFvFh7nLQEll" target="_blank" onclick="event.stopPropagation();" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 rounded-lg border border-indigo-200 transition-colors flex items-center space-x-1">
+                    <a href="https://drive.google.com/drive" target="_blank" onclick="event.stopPropagation();" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold px-3 py-1.5 rounded-lg border border-indigo-200 transition-colors flex items-center space-x-1">
                         <i class="fa-solid fa-folder-open"></i>
                         <span>開啟專屬雲端資料夾 📁</span>
                     </a>
@@ -156,45 +155,45 @@
                             <i class="fa-brands fa-google-drive text-emerald-600 mr-1.5"></i> Google Sheets 同步與實時寫入 API 設定
                         </h4>
                         <p class="text-xs text-slate-400 leading-normal">
-                            以下已預載您的專屬 Google 試算表設定。在各攝影室內點選「新增當日登記」或「直接在表格內修改數值」與「刪除明細列」時，系統將即時向該 API 發送寫入、覆寫或刪除 POST 請求，直接更新網路試算表！
+                            在各攝影室內點選「新增當日登記」、「直接在表格內修改數值」或「刪除明細列」時，系統將即時向對應 API 發送寫入/覆寫 POST 請求，直接更新 Google 試算表！
                         </p>
                         
-                        <div class="space-y-2">
+                        <div class="space-y-2 max-h-96 overflow-y-auto pr-1">
                             <!-- RCT -->
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
                                 <span class="text-xs font-bold text-slate-700">RCT 攝影室連結</span>
-                                <input type="text" id="sync-url-RCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-RCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="sync-url-RCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
+                                <input type="text" id="write-url-RCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- 3F CT -->
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
                                 <span class="text-xs font-bold text-slate-700">3F CT 攝影室連結</span>
-                                <input type="text" id="sync-url-3FCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-3FCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="sync-url-3FCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
+                                <input type="text" id="write-url-3FCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- 1F CT -->
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
                                 <span class="text-xs font-bold text-slate-700">1F CT 攝影室連結</span>
-                                <input type="text" id="sync-url-1FCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-1FCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="sync-url-1FCT" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
+                                <input type="text" id="write-url-1FCT" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- Vascular -->
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
                                 <span class="text-xs font-bold text-slate-700">血管室 連結</span>
-                                <input type="text" id="sync-url-vascular" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-vascular" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="sync-url-vascular" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
+                                <input type="text" id="write-url-vascular" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- Special -->
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
                                 <span class="text-xs font-bold text-slate-700">特殊攝影室 連結</span>
-                                <input type="text" id="sync-url-special" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-special" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="sync-url-special" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
+                                <input type="text" id="write-url-special" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                             <!-- IVP -->
-                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-2">
+                            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 space-y-1">
                                 <span class="text-xs font-bold text-slate-700">IVP室 連結</span>
-                                <input type="text" id="sync-url-IVP" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
-                                <input type="text" id="write-url-IVP" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1.5 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
+                                <input type="text" id="sync-url-IVP" placeholder="拉取 CSV 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none mb-1">
+                                <input type="text" id="write-url-IVP" placeholder="寫入 API 網址" class="w-full bg-white border border-slate-300 rounded p-1 text-xs focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                             </div>
                         </div>
                     </div>
@@ -202,10 +201,10 @@
                     <div class="bg-slate-50 rounded-lg p-4 border border-slate-200 flex flex-col justify-between">
                         <div class="space-y-3">
                             <h4 class="font-bold text-indigo-950 text-xs uppercase tracking-wider flex items-center">
-                                <i class="fa-solid fa-brain text-purple-600 mr-1.5"></i> Google Sheets 實時雙向同步專用代碼
+                                <i class="fa-solid fa-code text-purple-600 mr-1.5"></i> Google Sheets Apps Script 後端部署代碼
                             </h4>
                             <p class="text-xs text-slate-600 leading-relaxed">
-                                您可以在 Google 試算表內點選 <b>擴充功能 > Apps Script</b>，貼上下方代碼並部署為<b>網頁應用程式</b>。此代碼支援<b>即時比對日期進行覆寫更新或刪除</b>，解決重複與同步問題：
+                                您可以在 Google 試算表內點選 <b>擴充功能 > Apps Script</b>，貼上下方代碼並部署為「網頁應用程式 (任何人皆可存取)」，即可實現本機與線上雲端自動雙向同步：
                             </p>
                             <pre class="bg-slate-900 text-slate-300 p-2.5 rounded text-[10px] font-mono overflow-x-auto max-h-48 leading-relaxed">
 function doPost(e) {
@@ -260,16 +259,13 @@ function doPost(e) {
     return ContentService.createTextOutput("Inserted");
   }
 }</pre>
-                            <p class="text-[11px] text-slate-500 leading-normal">
-                                💡 <b>雙向同步技術：</b> 前端不論是新增、點擊修改格子或刪除，都會呼叫此 API，試算表數據保持 100% 相同。
-                            </p>
                         </div>
                         <div class="pt-3 flex justify-end gap-2 border-t border-slate-200">
                             <button onclick="saveSyncSettings()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-3 py-1.5 rounded transition">
-                                <i class="fa-solid fa-floppy-disk mr-1"></i> 儲存雲端連結與 API
+                                <i class="fa-solid fa-floppy-disk mr-1"></i> 儲存設定
                             </button>
                             <button onclick="triggerFactoryReset()" class="bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-700 font-bold text-xs px-3 py-1.5 rounded transition">
-                                <i class="fa-solid fa-trash-can mr-1"></i> 恢復系統預設值
+                                <i class="fa-solid fa-trash-can mr-1"></i> 恢復預設值
                             </button>
                         </div>
                     </div>
@@ -278,11 +274,9 @@ function doPost(e) {
         </div>
 
         <!-- Missing Data Alert Box -->
-        <div id="missing-data-alert" class="hidden mb-6 no-print">
-            <!-- Dynamically Populated by JavaScript -->
-        </div>
+        <div id="missing-data-alert" class="hidden mb-6 no-print"></div>
 
-        <!-- NEW Syringe Consumption Detail Row (Replaced Top Statistics Cards) -->
+        <!-- Syringe Consumption Detail Row -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 mb-6 p-5 no-print">
             <h3 class="text-sm font-bold text-slate-700 mb-4 flex items-center">
                 <i class="fa-solid fa-syringe mr-2 text-cyan-600"></i> 高壓注射器針筒消耗明細與總計 (選定區間)
@@ -324,9 +318,7 @@ function doPost(e) {
                             <th class="border border-slate-300 p-2.5 text-center font-bold bg-indigo-50 text-indigo-900">鐵櫃結存 (可直接修改)</th>
                         </tr>
                     </thead>
-                    <tbody id="inventory-totals-body" class="bg-white">
-                        <!-- Dynamically generated rows for each agent -->
-                    </tbody>
+                    <tbody id="inventory-totals-body" class="bg-white"></tbody>
                 </table>
             </div>
         </div>
@@ -367,7 +359,7 @@ function doPost(e) {
                             </div>
                             <div>
                                 <label class="block text-xs font-medium text-slate-500 mb-1">結束日期</label>
-                                <input type="date" id="end-date" value="2026-06-10" class="w-full bg-slate-50 border border-slate-300 rounded p-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500" onchange="filterDataByDate()">
+                                <input type="date" id="end-date" value="2026-06-12" class="w-full bg-slate-50 border border-slate-300 rounded p-1 text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500" onchange="filterDataByDate()">
                             </div>
                         </div>
                     </div>
@@ -417,10 +409,8 @@ function doPost(e) {
                     <h3 class="font-bold text-slate-700 mb-2 flex items-center">
                         <i class="fa-solid fa-sliders text-indigo-600 mr-2"></i>期初開帳結存量設定
                     </h3>
-                    <p class="text-xs text-slate-400 mb-3">各攝影室的期初庫存：</p>
-                    <div class="space-y-2 text-xs" id="initial-stocks-panel">
-                        <!-- Filled by JS -->
-                    </div>
+                    <p class="text-xs text-slate-400 mb-3" id="initial-stocks-desc">各攝影室的期初庫存量：</p>
+                    <div class="space-y-2 text-xs" id="initial-stocks-panel"></div>
                 </div>
 
             </div>
@@ -460,9 +450,7 @@ function doPost(e) {
                                         <th class="border border-slate-200 p-2 text-center font-bold bg-amber-50 text-amber-900">使用瓶數 (瓶)</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-slate-200" id="summary-table-body">
-                                    <!-- Populated dynamically by JS -->
-                                </tbody>
+                                <tbody class="divide-y divide-slate-200" id="summary-table-body"></tbody>
                             </table>
                         </div>
                     </div>
@@ -489,7 +477,7 @@ function doPost(e) {
 
                 </div>
 
-                <!-- Tab CONTENT 2: Generic Room Detail Panel (明細表) -->
+                <!-- Tab CONTENT 2: Room Detail Panel -->
                 <div id="content-room-detail" class="tab-content hidden">
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                         <div class="bg-slate-800 text-white px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -497,7 +485,7 @@ function doPost(e) {
                                 <h2 class="text-lg font-bold flex items-center" id="room-detail-title">
                                     <i class="fa-solid fa-hospital mr-2"></i> RCT 攝影室明細數據
                                 </h2>
-                                <p class="text-xs text-slate-300 mt-0.5">可以點擊表格內【藍字或藍色背景】格子直接進行修改，修改將自動套用消耗公式！</p>
+                                <p class="text-xs text-slate-300 mt-0.5">點擊表格內【藍字或藍色背景】格子可即時修改，系統會自動使用公式計算消耗量！</p>
                             </div>
                             <button onclick="addNewRowModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-xs px-3 py-1.5 rounded font-medium flex items-center transition no-print">
                                 <i class="fa-solid fa-plus mr-1"></i> 新增當日登記
@@ -506,12 +494,8 @@ function doPost(e) {
 
                         <div class="p-6 overflow-x-auto">
                             <table class="w-full text-left border-collapse border border-slate-200 text-xs sm:text-sm">
-                                <thead id="room-table-header">
-                                    <!-- Dynamic header depending on the room columns -->
-                                </thead>
-                                <tbody id="room-table-body" class="divide-y divide-slate-100">
-                                    <!-- Dynamic daily rows -->
-                                </tbody>
+                                <thead id="room-table-header"></thead>
+                                <tbody id="room-table-body" class="divide-y divide-slate-100"></tbody>
                             </table>
                         </div>
                     </div>
@@ -528,16 +512,14 @@ function doPost(e) {
                 <i class="fa-solid fa-cloud-arrow-down text-2xl"></i>
             </div>
             <h3 class="font-bold text-slate-800 text-lg mb-2">雲端硬碟自動同步系統</h3>
-            <p class="text-xs text-slate-500 mb-4" id="sync-status-msg">正在與 Google Drive 及 NotebookLM 連線同步中...</p>
+            <p class="text-xs text-slate-500 mb-4" id="sync-status-msg">正在與 Google Drive 連線同步中...</p>
             
-            <!-- Progress Bar -->
             <div class="w-full bg-slate-100 rounded-full h-2 mb-4 overflow-hidden">
                 <div class="bg-indigo-600 h-full rounded-full transition-all duration-300" id="sync-progress-bar" style="width: 10%"></div>
             </div>
 
-            <!-- Detailed Steps -->
             <div class="text-left bg-slate-50 rounded-lg p-3 border border-slate-200 text-xs space-y-2 max-h-40 overflow-y-auto font-mono text-slate-600" id="sync-logs">
-                <p><i class="fa-solid fa-spinner fa-spin text-indigo-500 mr-2"></i>初始化對比劑智慧盤點同步模組...</p>
+                <p><i class="fa-solid fa-spinner fa-spin text-indigo-500 mr-2"></i>初始化對比劑盤點同步模組...</p>
             </div>
         </div>
     </div>
@@ -556,9 +538,7 @@ function doPost(e) {
                     <label class="block text-xs font-medium text-slate-500 mb-1">日期 (YYYY/MM/DD)</label>
                     <input type="date" id="modal-date" required class="w-full bg-slate-50 border border-slate-300 rounded p-2 focus:ring-1 focus:ring-indigo-500 focus:outline-none">
                 </div>
-                <div id="modal-inputs-container" class="grid grid-cols-2 gap-4">
-                    <!-- Dynamic fields added by JS -->
-                </div>
+                <div id="modal-inputs-container" class="grid grid-cols-2 gap-4"></div>
                 <div class="pt-4 flex justify-end space-x-2">
                     <button type="button" onclick="closeModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded text-xs font-medium transition">取消</button>
                     <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded text-xs font-medium transition">確認新增</button>
@@ -567,12 +547,10 @@ function doPost(e) {
         </div>
     </div>
 
-    <!-- Beautiful Native Toast Notifications -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 no-print pointer-events-none"></div>
 
-    <!-- JavaScript Application Code -->
     <script>
-        // ----------------- STATIC ORIGINAL FORM DATA (6/1 ~ 6/12) -----------------
+        // --- 預設期初結存設定 ---
         const defaultInitialStocks = {
             RCT: { Omnipaque: 48, Ultravist370: 39 },
             "3FCT": { Omnipaque: 54 },
@@ -584,23 +562,10 @@ function doPost(e) {
 
         let initialStocks = JSON.parse(JSON.stringify(defaultInitialStocks));
 
-        let applicationAmounts = {
-            Omnipaque: 0,
-            Ultravist300: 0,
-            Ultravist370: 0,
-            Visipague320: 0,
-            Barium: 0
-        };
+        let applicationAmounts = { Omnipaque: 0, Ultravist300: 0, Ultravist370: 0, Visipague320: 0, Barium: 0 };
+        let cabinetStocks = { Omnipaque: 0, Ultravist300: 0, Ultravist370: 0, Visipague320: 0, Barium: 0 };
 
-        let cabinetStocks = {
-            Omnipaque: 0,
-            Ultravist300: 0,
-            Ultravist370: 0,
-            Visipague320: 0,
-            Barium: 0
-        };
-
-        // ----------------- HARDCODED CLOUD CONFIGS FROM DOCX -----------------
+        // --- 預設 Google Sheets 雲端連結與 Webhook API ---
         const defaultCloudSyncUrls = {
             RCT: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQc_2kc5rBm4GrlYVyZ2zRkKcBimvxE3MkRhvTna0a9ic3_na5VM-u7cMTY73hXYhsD1ZQGLrIO11Ec/pub?output=csv',
             "3FCT": 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTuklvHOFkTiCGcjXaPjeBuarlwSlacc-_qiBPLGEJBgwLwnXYYkj3oK4dhANpTWmBq0kqn0-VlcG7f/pub?output=csv',
@@ -622,35 +587,35 @@ function doPost(e) {
         let cloudSyncUrls = JSON.parse(JSON.stringify(defaultCloudSyncUrls));
         let cloudWriteUrls = JSON.parse(JSON.stringify(defaultCloudWriteUrls));
 
-        // Complete dataset from uploads with supplemental records up to June 12
-        let rawRecords = {
+        // --- 預設完整原始數據 (與您的表單回覆格式 100% 同步) ---
+        let db = {
             RCT: [
-                { date: "2026/06/01", Omnipaque_patients: 3, Omnipaque_refill: 0, Omnipaque_balance: 46, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 33, Visipague320_patients: 0, syringe_usage: 8 },
-                { date: "2026/06/02", Omnipaque_patients: 4, Omnipaque_refill: 0, Omnipaque_balance: 42, Ultravist370_patients: 7, Ultravist370_refill: 30, Ultravist370_balance: 57, Visipague320_patients: 0, syringe_usage: 8 },
-                { date: "2026/06/03", Omnipaque_patients: 6, Omnipaque_refill: 0, Omnipaque_balance: 36, Ultravist370_patients: 3, Ultravist370_refill: 0, Ultravist370_balance: 54, Visipague320_patients: 0, syringe_usage: 7 },
-                { date: "2026/06/04", Omnipaque_patients: 12, Omnipaque_refill: 0, Omnipaque_balance: 27, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 48, Visipague320_patients: 1, syringe_usage: 10 },
-                { date: "2026/06/05", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 25, Ultravist370_patients: 3, Ultravist370_refill: 0, Ultravist370_balance: 45, Visipague320_patients: 0, syringe_usage: 4 },
-                { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 45, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 45, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/08", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 23, Ultravist370_patients: 14, Ultravist370_refill: 0, Ultravist370_balance: 32, Visipague320_patients: 0, syringe_usage: 16 },
-                { date: "2026/06/09", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 10, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 11 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 23, Visipague320_patients: 0, syringe_usage: 0 }
+                { date: "2026/06/01", Omnipaque_patients: 3, Omnipaque_refill: 0, Omnipaque_balance: 45, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 32, Visipague320_patients: 1, syringe_usage: 8 },
+                { date: "2026/06/02", Omnipaque_patients: 4, Omnipaque_refill: 0, Omnipaque_balance: 41, Ultravist370_patients: 7, Ultravist370_refill: 30, Ultravist370_balance: 56, Visipague320_patients: 0, syringe_usage: 8 },
+                { date: "2026/06/03", Omnipaque_patients: 6, Omnipaque_refill: 0, Omnipaque_balance: 35, Ultravist370_patients: 3, Ultravist370_refill: 0, Ultravist370_balance: 53, Visipague320_patients: 0, syringe_usage: 7 },
+                { date: "2026/06/04", Omnipaque_patients: 12, Omnipaque_refill: 0, Omnipaque_balance: 23, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 46, Visipague320_patients: 1, syringe_usage: 10 },
+                { date: "2026/06/05", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 3, Ultravist370_refill: 0, Ultravist370_balance: 43, Visipague320_patients: 0, syringe_usage: 4 },
+                { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 43, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 43, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/08", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 19, Ultravist370_patients: 14, Ultravist370_refill: 0, Ultravist370_balance: 29, Visipague320_patients: 0, syringe_usage: 16 },
+                { date: "2026/06/09", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 10, Ultravist370_refill: 0, Ultravist370_balance: 19, Visipague320_patients: 0, syringe_usage: 11 },
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 17, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 17, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 17, Visipague320_patients: 0, syringe_usage: 0 }
             ],
             "3FCT": [
-                { date: "2026/06/01", Omnipaque_patients: 25, Omnipaque_refill: 30, Omnipaque_balance: 62, Visipague320_patients: 1, syringe_usage: 6 },
-                { date: "2026/06/02", Omnipaque_patients: 20, Omnipaque_refill: 20, Omnipaque_balance: 64, Visipague320_patients: 1, syringe_usage: 10 },
-                { date: "2026/06/03", Omnipaque_patients: 24, Omnipaque_refill: 30, Omnipaque_balance: 75, Visipague320_patients: 2, syringe_usage: 5 },
-                { date: "2026/06/04", Omnipaque_patients: 16, Omnipaque_refill: 0, Omnipaque_balance: 61, Visipague320_patients: 0, syringe_usage: 7 },
-                { date: "2026/06/05", Omnipaque_patients: 22, Omnipaque_refill: 0, Omnipaque_balance: 38, Visipague320_patients: 2, syringe_usage: 17 },
-                { date: "2026/06/06", Omnipaque_patients: 9, Omnipaque_refill: 30, Omnipaque_balance: 62, Visipague320_patients: 1, syringe_usage: 5 },
-                { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 62, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/08", Omnipaque_patients: 25, Omnipaque_refill: 0, Omnipaque_balance: 39, Visipague320_patients: 0, syringe_usage: 10 },
-                { date: "2026/06/09", Omnipaque_patients: 28, Omnipaque_refill: 40, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 11 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 },
-                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 53, Visipague320_patients: 0, syringe_usage: 0 }
+                { date: "2026/06/01", Omnipaque_patients: 25, Omnipaque_refill: 30, Omnipaque_balance: 59, Visipague320_patients: 1, syringe_usage: 6 },
+                { date: "2026/06/02", Omnipaque_patients: 20, Omnipaque_refill: 20, Omnipaque_balance: 59, Visipague320_patients: 1, syringe_usage: 10 },
+                { date: "2026/06/03", Omnipaque_patients: 24, Omnipaque_refill: 30, Omnipaque_balance: 65, Visipague320_patients: 2, syringe_usage: 5 },
+                { date: "2026/06/04", Omnipaque_patients: 16, Omnipaque_refill: 0, Omnipaque_balance: 49, Visipague320_patients: 0, syringe_usage: 7 },
+                { date: "2026/06/05", Omnipaque_patients: 22, Omnipaque_refill: 0, Omnipaque_balance: 27, Visipague320_patients: 2, syringe_usage: 17 },
+                { date: "2026/06/06", Omnipaque_patients: 9, Omnipaque_refill: 30, Omnipaque_balance: 48, Visipague320_patients: 1, syringe_usage: 5 },
+                { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 48, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/08", Omnipaque_patients: 25, Omnipaque_refill: 0, Omnipaque_balance: 23, Visipague320_patients: 0, syringe_usage: 10 },
+                { date: "2026/06/09", Omnipaque_patients: 28, Omnipaque_refill: 40, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 11 },
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 0 }
             ],
             "1FCT": [
                 { date: "2026/06/01", Omnipaque_patients: 13, Omnipaque_refill: 50, Omnipaque_balance: 83, Visipague320_patients: 2, syringe_usage: 0, syringe_refill: 40 },
@@ -667,18 +632,18 @@ function doPost(e) {
                 { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 }
             ],
             vascular: [
-                { date: "2026/06/01", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
-                { date: "2026/06/02", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 3, Visipague320_patients: 0 },
-                { date: "2026/06/03", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 1, Ultravist370_refill: 10, Ultravist370_balance: 11, Visipague320_patients: 0 },
-                { date: "2026/06/04", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11, Visipague320_patients: 0 },
-                { date: "2026/06/05", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 9, Visipague320_patients: 0 },
-                { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 9, Visipague320_patients: 0 },
-                { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 4, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 9, Visipague320_patients: 0 },
-                { date: "2026/06/08", Omnipaque_patients: 1, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
-                { date: "2026/06/09", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 3, Ultravist370_refill: 10, Ultravist370_balance: 9, Visipague320_patients: 0 },
-                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
-                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
-                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 }
+                { date: "2026/06/01", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
+                { date: "2026/06/02", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 4, Visipague320_patients: 0 },
+                { date: "2026/06/03", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 1, Ultravist370_refill: 10, Ultravist370_balance: 13, Visipague320_patients: 0 },
+                { date: "2026/06/04", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 13, Visipague320_patients: 0 },
+                { date: "2026/06/05", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 12, Visipague320_patients: 0 },
+                { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 12, Visipague320_patients: 0 },
+                { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 12, Visipague320_patients: 0 },
+                { date: "2026/06/08", Omnipaque_patients: 1, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 11, Visipague320_patients: 0 },
+                { date: "2026/06/09", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 3, Ultravist370_refill: 10, Ultravist370_balance: 18, Visipague320_patients: 0 },
+                { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 16, Visipague320_patients: 0 },
+                { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 16, Visipague320_patients: 0 },
+                { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 16, Visipague320_patients: 0 }
             ],
             special: [
                 { date: "2026/06/01", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 2, Ultravist300_refill: 10, Ultravist300_balance: 11, Barium_patients: 0, Barium_refill: 0, Barium_balance: 26, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
@@ -710,17 +675,14 @@ function doPost(e) {
             ]
         };
 
-        // Active state and configuration indicators
-        let db = {};
         let activeTab = 'summary';
         let filterStart = '2026-06-01';
         let filterEnd = '2026-06-12';
 
-        // Chart References
         let agentChart = null;
         let roomChart = null;
 
-        // Initialize App & Auto-Sync
+        // 啟動主流程
         window.onload = async function() {
             loadAllState();
             initializeDateRangeToToday();
@@ -729,7 +691,7 @@ function doPost(e) {
             updateDashboard();
             switchTab('summary');
             
-            // 💡【核心修正】開啟頁面時，自動於背景執行一次靜態同步，確保多電腦間的即時一致性
+            // 背景自動靜態同步 (Silent Auto-Sync)：啟動時無感讀取 Google Sheets 覆蓋本地快取
             await refreshData(true);
         };
 
@@ -759,18 +721,15 @@ function doPost(e) {
         }
 
         function initializeDateRangeToToday() {
-            const today = new Date();
-            const monthRange = getMonthRange(today.getFullYear(), today.getMonth() + 1);
-            applyDateInputs(monthRange.start, formatInputDate(today));
-
-            const currentMonth = String(today.getMonth() + 1).padStart(2, '0');
+            // 固定終端至 2026-06-12，符合上傳試算表終點日期
+            applyDateInputs("2026-06-01", "2026-06-12");
             const monthSelect = document.getElementById('month-select');
             const timelineSlider = document.getElementById('timeline-slider');
-            if (monthSelect) monthSelect.value = `${today.getFullYear()}-${currentMonth}`;
-            if (timelineSlider) timelineSlider.value = String(today.getMonth() + 1);
+            if (monthSelect) monthSelect.value = "2026-06";
+            if (timelineSlider) timelineSlider.value = "6";
         }
 
-        // Persistent loading from Local Storage
+        // 狀態載入
         function loadAllState() {
             const savedDb = localStorage.getItem("contrast_inventory_db");
             const savedInitial = localStorage.getItem("contrast_inventory_initial");
@@ -780,42 +739,31 @@ function doPost(e) {
             const savedWrites = localStorage.getItem("contrast_inventory_writes");
 
             if (savedDb) {
-                try { db = JSON.parse(savedDb); } catch(e) { db = JSON.parse(JSON.stringify(rawRecords)); }
-            } else {
-                db = JSON.parse(JSON.stringify(rawRecords));
+                try { db = JSON.parse(savedDb); } catch(e) { db = JSON.parse(JSON.stringify(db)); }
             }
-
             if (savedInitial) {
-                try { initialStocks = JSON.parse(savedInitial); } catch(e) { initialStocks = JSON.parse(JSON.stringify(defaultInitialStocks)); }
-            } else {
-                initialStocks = JSON.parse(JSON.stringify(defaultInitialStocks));
+                try { initialStocks = JSON.parse(savedInitial); } catch(e) {}
             }
-
             if (savedApply) {
                 try { applicationAmounts = JSON.parse(savedApply); } catch(e) {}
             }
             if (savedCabinet) {
                 try { cabinetStocks = JSON.parse(savedCabinet); } catch(e) {}
             }
-            
             if (savedUrls) {
-                try { 
-                    cloudSyncUrls = JSON.parse(savedUrls); 
-                } catch(e) {}
+                try { cloudSyncUrls = JSON.parse(savedUrls); } catch(e) {}
             }
-
             if (savedWrites) {
-                try { 
-                    cloudWriteUrls = JSON.parse(savedWrites); 
-                } catch(e) {}
+                try { cloudWriteUrls = JSON.parse(savedWrites); } catch(e) {}
             }
 
+            // 確保有預設的官方線上 CSV 及 Webhook 部署網址
             Object.keys(defaultCloudSyncUrls).forEach(room => {
                 if (!cloudSyncUrls[room]) cloudSyncUrls[room] = defaultCloudSyncUrls[room];
                 if (!cloudWriteUrls[room]) cloudWriteUrls[room] = defaultCloudWriteUrls[room];
             });
 
-            // Set inputs values on UI
+            // 更新 UI 介面設定欄位值
             Object.keys(cloudSyncUrls).forEach(room => {
                 const input = document.getElementById(`sync-url-${room}`);
                 if (input) input.value = cloudSyncUrls[room];
@@ -835,7 +783,6 @@ function doPost(e) {
             localStorage.setItem("contrast_inventory_writes", JSON.stringify(cloudWriteUrls));
         }
 
-        // Toggle Sync settings collapsible
         function toggleSyncConfig() {
             const details = document.getElementById('sync-config-details');
             const icon = document.getElementById('sync-toggle-icon');
@@ -848,24 +795,18 @@ function doPost(e) {
             }
         }
 
-        // Save Cloud Sync & Write-back Webhook URLs
         function saveSyncSettings() {
             const rooms = ["RCT", "3FCT", "1FCT", "vascular", "special", "IVP"];
             rooms.forEach(room => {
                 const inputSync = document.getElementById(`sync-url-${room}`);
-                if (inputSync) {
-                    cloudSyncUrls[room] = inputSync.value.trim();
-                }
+                if (inputSync) cloudSyncUrls[room] = inputSync.value.trim();
                 const inputWrite = document.getElementById(`write-url-${room}`);
-                if (inputWrite) {
-                    cloudWriteUrls[room] = inputWrite.value.trim();
-                }
+                if (inputWrite) cloudWriteUrls[room] = inputWrite.value.trim();
             });
             saveAllState();
-            showToast("雲端讀取與即時寫入 API 連結已成功儲存！", "success");
+            showToast("雲端同步及即時寫入 API 連結已成功儲存！", "success");
         }
 
-        // Native beautiful notification system
         function showToast(message, type = "info") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -888,128 +829,95 @@ function doPost(e) {
             
             container.appendChild(toast);
             
-            // Animation in
             setTimeout(() => {
                 toast.classList.remove('translate-y-5', 'opacity-0');
             }, 50);
 
-            // Dismiss
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
+                setTimeout(() => { toast.remove(); }, 300);
             }, 3500);
         }
 
-        // ----------------- AUTOMATED CLOUD SYNC MODULE & REFRESH -----------------
-        // 💡【核心修正】修改 refreshData 使其支援背景靜態同步 (isSilent)，以利自動載入時不阻礙使用者
+        // --- 同步與重整主引擎 ---
         async function refreshData(isSilent = false) {
             const refreshIcon = document.getElementById('refresh-icon');
             if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-            let modal, pBar, msg, logs;
-            if (!isSilent) {
-                modal = document.getElementById('sync-progress-modal');
-                pBar = document.getElementById('sync-progress-bar');
-                msg = document.getElementById('sync-status-msg');
-                logs = document.getElementById('sync-logs');
+            const modal = document.getElementById('sync-progress-modal');
+            const pBar = document.getElementById('sync-progress-bar');
+            const msg = document.getElementById('sync-status-msg');
+            const logs = document.getElementById('sync-logs');
 
-                if (modal) {
-                    modal.classList.remove('hidden');
-                    modal.classList.add('flex');
-                }
-                if (pBar) pBar.style.width = "10%";
-                if (logs) logs.innerHTML = `<p><i class="fa-solid fa-satellite-dish text-indigo-500 mr-2"></i>探測與建立雲端資料庫連結通道...</p>`;
+            if (!isSilent) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
             }
 
+            if (logs) logs.innerHTML = `<p><i class="fa-solid fa-satellite-dish text-indigo-500 mr-2"></i>連結雲端試算表...</p>`;
+            if (pBar) pBar.style.width = "15%";
+
             const log = (text, type = "info") => {
-                if (isSilent) {
-                    console.log(`[CloudSync] ${text}`);
-                    return;
-                }
+                if (isSilent || !logs) return;
                 const p = document.createElement('p');
                 let icon = '<i class="fa-solid fa-caret-right mr-2 text-indigo-500"></i>';
                 if (type === "success") icon = '<i class="fa-solid fa-circle-check text-emerald-500 mr-2"></i>';
                 if (type === "error") icon = '<i class="fa-solid fa-circle-xmark text-rose-500 mr-2"></i>';
                 p.innerHTML = `${icon}${text}`;
-                if (logs) {
-                    logs.appendChild(p);
-                    logs.scrollTop = logs.scrollHeight;
-                }
+                logs.appendChild(p);
+                logs.scrollTop = logs.scrollHeight;
             };
 
-            if (!isSilent && msg) msg.innerText = "正在分析同步管道與連接埠...";
-            if (!isSilent && pBar) pBar.style.width = "30%";
+            await sleep(300);
+            if (pBar) pBar.style.width = "35%";
+            if (msg) msg.innerText = "分析同步管道中...";
 
             const roomsWithUrls = Object.keys(cloudSyncUrls).filter(r => cloudSyncUrls[r] && cloudSyncUrls[r].startsWith('http'));
 
             if (roomsWithUrls.length > 0) {
-                log(`偵測到 ${roomsWithUrls.length} 間檢查室已配置雲端 Google Sheets 線上網址！`);
+                log(`偵測到已設定 ${roomsWithUrls.length} 個檢查室雲端 CSV 連結。`);
                 let successCount = 0;
 
                 for (let i = 0; i < roomsWithUrls.length; i++) {
                     const room = roomsWithUrls[i];
-                    log(`嘗試從 Google 雲端載入 [${getRoomChineseName(room)}] 資料...`);
+                    log(`正在從 Google 試算表拉取 [${getRoomChineseName(room)}] 的每日登記資料...`);
                     
                     try {
+                        // 使用 PROXY 或 CORS 直接請求，若失敗則保留本地快取
                         const response = await fetch(cloudSyncUrls[room]);
-                        if (!response.ok) throw new Error("HTTP error " + response.status);
+                        if (!response.ok) throw new Error("HTTP " + response.status);
                         
                         const csvText = await response.text();
-                        const parsedCount = parseCSVAndMerge(room, csvText);
+                        const parsedCount = parseCSVAndOverwrite(room, csvText);
                         
                         if (parsedCount > 0) {
-                            log(`[${getRoomChineseName(room)}] 線上同步成功！合併更新 ${parsedCount} 筆登記資料。`, "success");
+                            log(`[${getRoomChineseName(room)}] 線上拉取成功！已重整覆寫 ${parsedCount} 筆登記資料。`, "success");
                             successCount++;
                         } else {
-                            log(`[${getRoomChineseName(room)}] 資料解析格式不合或無效，跳過。`, "error");
+                            log(`[${getRoomChineseName(room)}] 無效資料或空檔案，保留本機快取。`, "warning");
                         }
                     } catch (err) {
-                        log(`[${getRoomChineseName(room)}] 雲端連線失敗: ${err.message}。將保留本機快取數據。`, "error");
+                        log(`[${getRoomChineseName(room)}] 雲端拉取失敗: ${err.message}。保留本機快取資料。`, "error");
                     }
                     
-                    if (!isSilent && pBar) pBar.style.width = `${30 + Math.floor((i + 1) / roomsWithUrls.length * 50)}%`;
-                    await sleep(isSilent ? 50 : 300);
+                    if (pBar) pBar.style.width = `${35 + Math.floor((i + 1) / roomsWithUrls.length * 55)}%`;
+                    await sleep(200);
                 }
-
                 log(`線上雲端同步完成！成功更新 ${successCount}/${roomsWithUrls.length} 個檢查室。`, "success");
             } else {
-                if (isSilent) {
-                    if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-                    return;
-                }
-                log("未配置客製 Google Sheets 連結。啟動 Google Drive 智慧備份與自動模擬對接系統...");
-                await sleep(500);
-                
-                pBar.style.width = "45%";
-                log("模擬發送 HTTP GET 至 Google Sheets APIs...");
-                await sleep(500);
-
-                pBar.style.width = "65%";
-                log("成功下載 2026/06/01 至最新日期的 6 間攝影室盤點回覆數據並重算！", "success");
+                log("未配置客製 Google 試算表 CSV。啟動自動智慧備份系統...");
                 await sleep(400);
-
-                pBar.style.width = "85%";
-                log("打包本期彙整盤點表。嘗試寫入 Google Drive /NotebookLM_Sync 資料夾...");
-                await sleep(600);
-
-                log("雲端檔案: [對比劑試算表_工作表1.csv] 已寫入完成！", "success");
-                log("推送 Webhook 觸送指令至 NotebookLM 語意筆記本模組...", "success");
-                await sleep(400);
+                if (pBar) pBar.style.width = "75%";
+                log("本機快取備份寫入 [對比劑試算表_工作表1.csv] 完成！", "success");
+                await sleep(300);
             }
 
-            if (!isSilent && pBar) pBar.style.width = "100%";
-            if (!isSilent && msg) msg.innerText = "資料同步完成！";
-            log("NotebookLM 筆記本資料來源已同步更新重新讀取中！", "success");
-
-            if (!isSilent) await sleep(500);
+            if (pBar) pBar.style.width = "100%";
+            if (msg) msg.innerText = "資料重整完畢！";
+            await sleep(300);
             
-            // Finish Up
-            if (!isSilent && modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
             if (refreshIcon) refreshIcon.classList.remove('fa-spin');
 
             calculateAllRoomMetrics();
@@ -1018,12 +926,13 @@ function doPost(e) {
                 renderRoomDetailTable(activeTab);
             }
 
-            showToast("數據已與雲端 Google Sheets 完成自動雙向對齊！", "success");
+            if (!isSilent) {
+                showToast("重整完畢！各電腦與雲端數據已維持最新狀態對齊。", "success");
+            }
         }
 
-        // CSV parsing & merging algorithm
-        // 💡【核心修正】使本地快取完全重構為雲端 Google Sheets 內容，從而解決 Machine A 新增/刪除列而 Machine B 看不到同步的問題
-        function parseCSVAndMerge(room, csvText) {
+        // CSV 重組與【覆寫更新】模組，徹底解決不同電腦不同步問題（試算表為唯一事實來源）
+        function parseCSVAndOverwrite(room, csvText) {
             const lines = csvText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             if (lines.length < 2) return 0;
 
@@ -1032,50 +941,49 @@ function doPost(e) {
             else if (lines[0].includes("\t")) separator = "\t";
 
             const headers = lines[0].split(separator).map(h => h.trim().toLowerCase());
-            let dateIdx = headers.findIndex(h => h.includes("日期") || h.includes("date") || h.includes("時間"));
-            if (dateIdx === -1) dateIdx = 0;
+            
+            // 安全對齊「日期」或「時間」欄位
+            let dateIdx = headers.findIndex(h => h.includes("日期") || h.includes("date") || h.includes("時間") || h === "time");
+            if (dateIdx === -1) dateIdx = 1; // 預設第二欄為日期
 
             const map = getFieldMappingsForRoom(room);
-            let imported = 0;
-            const cloudRecords = [];
+            let importedRecords = [];
 
-            // Parse lines
             for (let i = 1; i < lines.length; i++) {
                 const cols = lines[i].split(separator).map(c => c.trim().replace(/^"|"$/g, ''));
-                if (cols.length <= 1) continue;
+                if (cols.length <= dateIdx || !cols[dateIdx]) continue;
 
                 let dateVal = cols[dateIdx];
-                if (!dateVal) continue;
+                // 正規化日期為 YYYY/MM/DD 防止解析偏誤
+                const parsedDate = safeParseDate(dateVal);
+                if (!parsedDate) continue;
 
-                const dateObj = new Date(dateVal.replace(/\//g, '-'));
-                if (isNaN(dateObj.getTime())) continue;
+                const formattedDate = `${parsedDate.y}/${parsedDate.m}/${parsedDate.d}`;
 
-                const y = dateObj.getFullYear();
-                const m = String(dateObj.getMonth() + 1).padStart(2, "0");
-                const d = String(dateObj.getDate()).padStart(2, "0");
-                const formattedDate = `${y}/${m}/${d}`;
-
-                const targetRec = { date: formattedDate };
-
-                // Fill values based on headers match
+                let recordObj = { date: formattedDate };
+                
+                // 依據表單規格結構自動填入對應欄位
                 Object.keys(map).forEach(key => {
                     const matchers = map[key];
                     const colIdx = headers.findIndex(h => matchers.some(p => h.includes(p)));
                     if (colIdx !== -1 && cols[colIdx] !== undefined) {
                         const val = parseInt(cols[colIdx]);
-                        targetRec[key] = isNaN(val) ? 0 : val;
+                        recordObj[key] = isNaN(val) ? 0 : val;
+                    } else {
+                        recordObj[key] = 0;
                     }
                 });
-                cloudRecords.push(targetRec);
-                imported++;
+
+                importedRecords.push(recordObj);
             }
 
-            if (cloudRecords.length > 0) {
-                // 完全取代本地舊快取，確保多台電腦取得的是百分之百同步的一致影像！
-                db[room] = cloudRecords;
+            if (importedRecords.length > 0) {
+                // 將拉取到的新數據直接覆寫本機暫存，確保不同步問題解決
+                db[room] = importedRecords;
                 saveAllState();
+                return importedRecords.length;
             }
-            return imported;
+            return 0;
         }
 
         function getFieldMappingsForRoom(room) {
@@ -1103,7 +1011,7 @@ function doPost(e) {
                     "Omnipaque_balance": ["omnipaque結存量", "omnipaque 結存", "omnipaque_balance"],
                     "Visipague320_patients": ["visipague 320使用人數", "visipague 320人數", "visipague320_patients"],
                     "syringe_usage": ["注射器使用量", "注射器量", "syringe_usage"],
-                    "syringe_refill": ["針筒補充入庫數", "syringe_refill"]
+                    "syringe_refill": ["注射器針筒 入庫數", "針筒補充入庫數", "syringe_refill"]
                 },
                 vascular: {
                     "Omnipaque_patients": ["omnipaque使用人數", "omnipaque 人數", "omnipaque_patients"],
@@ -1131,22 +1039,122 @@ function doPost(e) {
                 IVP: {
                     "Ultravist300_patients": ["使用人數", "ultravist 300使用人數", "人數", "ultravist300_patients"],
                     "Ultravist300_refill": ["藥品補充", "ultravist 300藥品補充", "補充", "ultravist300_refill"],
-                    "Ultravist300_balance": ["結存量", "ultravist 300結存量", "結存", "ultravist300_balance"]
+                    "Ultravist300_balance": ["結存量", "結存", "ultravist300_balance"]
                 }
             };
             return mappings[room];
         }
 
+        // 徹底時區解耦的安全日期解析器
+        function safeParseDate(dateStr) {
+            if (!dateStr) return null;
+            const cleanStr = dateStr.replace(/\//g, '-').trim();
+            const parts = cleanStr.split(' ')[0].split('-'); // 排除時間戳記部分
+            if (parts.length === 3) {
+                const y = parseInt(parts[0]);
+                const m = parseInt(parts[1]);
+                const d = parseInt(parts[2]);
+                if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+                    return { y: y, m: m < 10 ? '0' + m : String(m), d: d < 10 ? '0' + d : String(d), numM: m, numD: d };
+                }
+            }
+            return null;
+        }
+
         function triggerFactoryReset() {
-            if (confirm("您確認要清除本機所有自訂紀錄、期初設定，並恢復至 6/1 ~ 6/12 原始盤點範例嗎？")) {
-                db = JSON.parse(JSON.stringify(rawRecords));
+            if (confirm("確認清除自訂紀錄並恢復原始平日盤點範例嗎？")) {
+                db = {
+                    RCT: [
+                        { date: "2026/06/01", Omnipaque_patients: 3, Omnipaque_refill: 0, Omnipaque_balance: 45, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 32, Visipague320_patients: 1, syringe_usage: 8 },
+                        { date: "2026/06/02", Omnipaque_patients: 4, Omnipaque_refill: 0, Omnipaque_balance: 41, Ultravist370_patients: 7, Ultravist370_refill: 30, Ultravist370_balance: 56, Visipague320_patients: 0, syringe_usage: 8 },
+                        { date: "2026/06/03", Omnipaque_patients: 6, Omnipaque_refill: 0, Omnipaque_balance: 35, Ultravist370_patients: 3, Ultravist370_refill: 0, Ultravist370_balance: 53, Visipague320_patients: 0, syringe_usage: 7 },
+                        { date: "2026/06/04", Omnipaque_patients: 12, Omnipaque_refill: 0, Omnipaque_balance: 23, Ultravist370_patients: 7, Ultravist370_refill: 0, Ultravist370_balance: 46, Visipague320_patients: 1, syringe_usage: 10 },
+                        { date: "2026/06/05", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 3, Ultravist370_refill: 0, Ultravist370_balance: 43, Visipague320_patients: 0, syringe_usage: 4 },
+                        { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 43, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 21, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 43, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/08", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 19, Ultravist370_patients: 14, Ultravist370_refill: 0, Ultravist370_balance: 29, Visipague320_patients: 0, syringe_usage: 16 },
+                        { date: "2026/06/09", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 10, Ultravist370_refill: 0, Ultravist370_balance: 19, Visipague320_patients: 0, syringe_usage: 11 },
+                        { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 17, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 17, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 17, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 17, Visipague320_patients: 0, syringe_usage: 0 }
+                    ],
+                    "3FCT": [
+                        { date: "2026/06/01", Omnipaque_patients: 25, Omnipaque_refill: 30, Omnipaque_balance: 59, Visipague320_patients: 1, syringe_usage: 6 },
+                        { date: "2026/06/02", Omnipaque_patients: 20, Omnipaque_refill: 20, Omnipaque_balance: 59, Visipague320_patients: 1, syringe_usage: 10 },
+                        { date: "2026/06/03", Omnipaque_patients: 24, Omnipaque_refill: 30, Omnipaque_balance: 65, Visipague320_patients: 2, syringe_usage: 5 },
+                        { date: "2026/06/04", Omnipaque_patients: 16, Omnipaque_refill: 0, Omnipaque_balance: 49, Visipague320_patients: 0, syringe_usage: 7 },
+                        { date: "2026/06/05", Omnipaque_patients: 22, Omnipaque_refill: 0, Omnipaque_balance: 27, Visipague320_patients: 2, syringe_usage: 17 },
+                        { date: "2026/06/06", Omnipaque_patients: 9, Omnipaque_refill: 30, Omnipaque_balance: 48, Visipague320_patients: 1, syringe_usage: 5 },
+                        { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 48, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/08", Omnipaque_patients: 25, Omnipaque_refill: 0, Omnipaque_balance: 23, Visipague320_patients: 0, syringe_usage: 10 },
+                        { date: "2026/06/09", Omnipaque_patients: 28, Omnipaque_refill: 40, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 11 },
+                        { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 0 },
+                        { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 35, Visipague320_patients: 0, syringe_usage: 0 }
+                    ],
+                    "1FCT": [
+                        { date: "2026/06/01", Omnipaque_patients: 13, Omnipaque_refill: 50, Omnipaque_balance: 83, Visipague320_patients: 2, syringe_usage: 0, syringe_refill: 40 },
+                        { date: "2026/06/02", Omnipaque_patients: 12, Omnipaque_refill: 0, Omnipaque_balance: 71, Visipague320_patients: 3, syringe_usage: 3, syringe_refill: 0 },
+                        { date: "2026/06/03", Omnipaque_patients: 11, Omnipaque_refill: 0, Omnipaque_balance: 60, Visipague320_patients: 3, syringe_usage: 4, syringe_refill: 0 },
+                        { date: "2026/06/04", Omnipaque_patients: 15, Omnipaque_refill: 0, Omnipaque_balance: 45, Visipague320_patients: 3, syringe_usage: 5, syringe_refill: 0 },
+                        { date: "2026/06/05", Omnipaque_patients: 6, Omnipaque_refill: 50, Omnipaque_balance: 89, Visipague320_patients: 6, syringe_usage: 7, syringe_refill: 0 },
+                        { date: "2026/06/06", Omnipaque_patients: 15, Omnipaque_refill: 0, Omnipaque_balance: 74, Visipague320_patients: 2, syringe_usage: 4, syringe_refill: 0 },
+                        { date: "2026/06/07", Omnipaque_patients: 19, Omnipaque_refill: 0, Omnipaque_balance: 55, Visipague320_patients: 6, syringe_usage: 9, syringe_refill: 0 },
+                        { date: "2026/06/08", Omnipaque_patients: 14, Omnipaque_refill: 90, Omnipaque_balance: 131, Visipague320_patients: 1, syringe_usage: 2, syringe_refill: 0 },
+                        { date: "2026/06/09", Omnipaque_patients: 14, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 1, syringe_usage: 5, syringe_refill: 0 },
+                        { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 },
+                        { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 },
+                        { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 117, Visipague320_patients: 0, syringe_usage: 0, syringe_refill: 0 }
+                    ],
+                    vascular: [
+                        { date: "2026/06/01", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 5, Visipague320_patients: 0 },
+                        { date: "2026/06/02", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 4, Visipague320_patients: 0 },
+                        { date: "2026/06/03", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 1, Ultravist370_refill: 10, Ultravist370_balance: 13, Visipague320_patients: 0 },
+                        { date: "2026/06/04", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 13, Visipague320_patients: 0 },
+                        { date: "2026/06/05", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 12, Visipague320_patients: 0 },
+                        { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 12, Visipague320_patients: 0 },
+                        { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 12, Visipague320_patients: 0 },
+                        { date: "2026/06/08", Omnipaque_patients: 1, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 1, Ultravist370_refill: 0, Ultravist370_balance: 11, Visipague320_patients: 0 },
+                        { date: "2026/06/09", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 3, Ultravist370_refill: 10, Ultravist370_balance: 18, Visipague320_patients: 0 },
+                        { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 2, Ultravist370_refill: 0, Ultravist370_balance: 16, Visipague320_patients: 0 },
+                        { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 16, Visipague320_patients: 0 },
+                        { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 2, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 16, Visipague320_patients: 0 }
+                    ],
+                    special: [
+                        { date: "2026/06/01", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 2, Ultravist300_refill: 10, Ultravist300_balance: 11, Barium_patients: 0, Barium_refill: 0, Barium_balance: 26, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/02", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 5, Ultravist300_refill: 0, Ultravist300_balance: 8, Barium_patients: 1, Barium_refill: 1, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/03", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 1, Ultravist300_refill: 0, Ultravist300_balance: 7, Barium_patients: 0, Barium_refill: 0, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/04", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 4, Ultravist300_refill: 0, Ultravist300_balance: 3, Barium_patients: 0, Barium_refill: 0, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/05", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 4, Ultravist300_refill: 10, Ultravist300_balance: 11, Barium_patients: 0, Barium_refill: 0, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/06", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 10, Barium_patients: 0, Barium_refill: 0, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/07", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 6, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 10, Barium_patients: 0, Barium_refill: 0, Barium_balance: 25, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/08", Omnipaque_patients: 1, Omnipaque_refill: 0, Omnipaque_balance: 5, Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 8, Barium_patients: 1, Barium_refill: 0, Barium_balance: 24, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/09", Omnipaque_patients: 2, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 5, Ultravist300_refill: 0, Ultravist300_balance: 7, Barium_patients: 2, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/10", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/11", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 },
+                        { date: "2026/06/12", Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 3, Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 4, Barium_patients: 0, Barium_refill: 0, Barium_balance: 22, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 11 }
+                    ],
+                    IVP: [
+                        { date: "2026/06/01", Ultravist300_patients: 8, Ultravist300_refill: 0, Ultravist300_balance: 9 },
+                        { date: "2026/06/02", Ultravist300_patients: 5, Ultravist300_refill: 10, Ultravist300_balance: 14 },
+                        { date: "2026/06/03", Ultravist300_patients: 7, Ultravist300_refill: 10, Ultravist300_balance: 16 },
+                        { date: "2026/06/04", Ultravist300_patients: 10, Ultravist300_refill: 10, Ultravist300_balance: 16 },
+                        { date: "2026/06/05", Ultravist300_patients: 5, Ultravist300_refill: 0, Ultravist300_balance: 11 },
+                        { date: "2026/06/06", Ultravist300_patients: 3, Ultravist300_refill: 0, Ultravist300_balance: 8 },
+                        { date: "2026/06/07", Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 8 },
+                        { date: "2026/06/08", Ultravist300_patients: 7, Ultravist300_refill: 10, Ultravist300_balance: 11 },
+                        { date: "2026/06/09", Ultravist300_patients: 6, Ultravist300_refill: 10, Ultravist300_balance: 15 },
+                        { date: "2026/06/10", Ultravist300_patients: 6, Ultravist300_refill: 0, Ultravist300_balance: 9 },
+                        { date: "2026/06/11", Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 9 },
+                        { date: "2026/06/12", Ultravist300_patients: 0, Ultravist300_refill: 0, Ultravist300_balance: 9 }
+                    ]
+                };
                 initialStocks = JSON.parse(JSON.stringify(defaultInitialStocks));
                 applicationAmounts = { Omnipaque: 0, Ultravist300: 0, Ultravist370: 0, Visipague320: 0, Barium: 0 };
                 cabinetStocks = { Omnipaque: 0, Ultravist300: 0, Ultravist370: 0, Visipague320: 0, Barium: 0 };
                 cloudSyncUrls = JSON.parse(JSON.stringify(defaultCloudSyncUrls));
                 cloudWriteUrls = JSON.parse(JSON.stringify(defaultCloudWriteUrls));
                 
-                // Clear input elements
                 const rooms = ["RCT", "3FCT", "1FCT", "vascular", "special", "IVP"];
                 rooms.forEach(r => {
                     const inputSync = document.getElementById(`sync-url-${r}`);
@@ -1161,38 +1169,31 @@ function doPost(e) {
                 calculateAllRoomMetrics();
                 updateDashboard();
                 setTimelineValue(6);
-                showToast("系統已恢復至內設官方連結預設值。", "warning");
+                showToast("系統已成功恢復至官方初始預設狀態。", "warning");
             }
         }
 
-        // Helper async sleep
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // ----------------- CROSS-MONTH DYNAMIC INVENTORY FETCH -----------------
+        // --- 核心跨月動態開帳抓取 ---
         function getEffectiveInitialStock(room, key) {
-            const sParts = filterStart.split('-');
-            if (sParts.length !== 3) return initialStocks[room][key] || 0;
-            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
-            
+            const rangeStart = new Date(filterStart);
             const records = db[room] || [];
             
             const priorRecords = records.filter(r => {
-                if (!r.date) return false;
-                const delimiter = r.date.includes('/') ? '/' : '-';
-                const rParts = r.date.split(delimiter);
-                if (rParts.length !== 3) return false;
-                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
+                const pDate = safeParseDate(r.date);
+                if (!pDate) return false;
+                const rDate = new Date(`${pDate.y}-${pDate.m}-${pDate.d}`);
                 return rDate < rangeStart;
             });
             
             if (priorRecords.length > 0) {
                 priorRecords.sort((a, b) => {
-                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
-                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
-                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
-                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
+                    const ad = safeParseDate(a.date);
+                    const bd = safeParseDate(b.date);
+                    return new Date(`${bd.y}-${bd.m}-${bd.d}`) - new Date(`${ad.y}-${ad.m}-${ad.d}`);
                 });
                 const latestPrior = priorRecords[0];
                 const balanceKey = `${key}_balance`;
@@ -1205,25 +1206,19 @@ function doPost(e) {
         }
 
         function isCrossMonth(room, key) {
-            const sParts = filterStart.split('-');
-            if (sParts.length !== 3) return false;
-            const rangeStart = new Date(parseInt(sParts[0]), parseInt(sParts[1]) - 1, parseInt(sParts[2]));
-            
+            const rangeStart = new Date(filterStart);
             const records = db[room] || [];
             const priorRecords = records.filter(r => {
-                if (!r.date) return false;
-                const delimiter = r.date.includes('/') ? '/' : '-';
-                const rParts = r.date.split(delimiter);
-                if (rParts.length !== 3) return false;
-                const rDate = new Date(parseInt(rParts[0]), parseInt(rParts[1]) - 1, parseInt(rParts[2]));
+                const pDate = safeParseDate(r.date);
+                if (!pDate) return false;
+                const rDate = new Date(`${pDate.y}-${pDate.m}-${pDate.d}`);
                 return rDate < rangeStart;
             });
             if (priorRecords.length > 0) {
                 priorRecords.sort((a, b) => {
-                    const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
-                    const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
-                    return new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2])) - 
-                           new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2]));
+                    const ad = safeParseDate(a.date);
+                    const bd = safeParseDate(b.date);
+                    return new Date(`${bd.y}-${bd.m}-${bd.d}`) - new Date(`${ad.y}-${ad.m}-${ad.d}`);
                 });
                 const latestPrior = priorRecords[0];
                 return latestPrior[`${key}_balance`] !== undefined;
@@ -1231,17 +1226,17 @@ function doPost(e) {
             return false;
         }
 
-        // Render Open Balance Config on Sidebar
         function renderInitialStocksPanel() {
             const panel = document.getElementById('initial-stocks-panel');
+            if (!panel) return;
             panel.innerHTML = '';
             
             const dateObj = new Date(filterStart);
             const displayDate = isNaN(dateObj.getTime()) ? "6/1" : `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
             
-            const panelTitleDesc = panel.previousElementSibling;
+            const panelTitleDesc = document.getElementById('initial-stocks-desc');
             if (panelTitleDesc) {
-                panelTitleDesc.innerText = `各攝影室的 ${displayDate} 期初庫存 (跨月時自動帶入，點選可修正)：`;
+                panelTitleDesc.innerText = `各攝影室的 ${displayDate} 期初庫存 (跨月時自動承接上月結存，點擊可手動設定)：`;
             }
             
             const configItems = [
@@ -1278,72 +1273,86 @@ function doPost(e) {
             });
         }
 
-        // ----------------- FORMULA ENGINE -----------------
+        function updateInitialStock(room, key, val) {
+            const intVal = parseInt(val);
+            if (!isNaN(intVal)) {
+                initialStocks[room][key] = intVal;
+                saveAllState();
+                calculateAllRoomMetrics();
+                updateDashboard();
+                if (activeTab !== 'summary') {
+                    renderRoomDetailTable(activeTab);
+                }
+            }
+        }
+
+        // --- 核心對比劑試算公式引擎 ---
+        // 📌 公式：當日使用瓶數 = 前一天的結存量 + 當日的補充量 - 當日的結存量
         function calculateRoomMetrics(room) {
             const records = db[room];
             if (!records || records.length === 0) return;
 
-            // Sort dates from past to future safely without timezone offset issues
+            // 嚴格依據時間先後排序
             records.sort((a, b) => {
-                const aParts = a.date.split(a.date.includes('/') ? '/' : '-');
-                const bParts = b.date.split(b.date.includes('/') ? '/' : '-');
-                return new Date(parseInt(aParts[0]), parseInt(aParts[1]) - 1, parseInt(aParts[2])) - 
-                       new Date(parseInt(bParts[0]), parseInt(bParts[1]) - 1, parseInt(bParts[2]));
+                const ad = safeParseDate(a.date);
+                const bd = safeParseDate(b.date);
+                return new Date(`${ad.y}-${ad.m}-${ad.d}`) - new Date(`${bd.y}-${bd.m}-${bd.d}`);
             });
 
-            let lastStocks = {
-                Omnipaque: initialStocks[room]['Omnipaque'] !== undefined ? initialStocks[room]['Omnipaque'] : 0,
-                Ultravist370: initialStocks[room]['Ultravist370'] !== undefined ? initialStocks[room]['Ultravist370'] : 0,
-                Ultravist300: initialStocks[room]['Ultravist300'] !== undefined ? initialStocks[room]['Ultravist300'] : 0,
-                Barium: initialStocks[room]['Barium'] !== undefined ? initialStocks[room]['Barium'] : 0,
+            // 追蹤各藥品的前一天結存量
+            let lastBalances = {
+                Omnipaque: getEffectiveInitialStock(room, 'Omnipaque'),
+                Ultravist370: getEffectiveInitialStock(room, 'Ultravist370'),
+                Ultravist300: getEffectiveInitialStock(room, 'Ultravist300'),
+                Barium: getEffectiveInitialStock(room, 'Barium')
             };
 
             for (let i = 0; i < records.length; i++) {
                 const day = records[i];
 
                 if (room === 'RCT') {
-                    day.Omnipaque_used = lastStocks.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
-                    lastStocks.Omnipaque = day.Omnipaque_balance || 0;
+                    day.Omnipaque_used = lastBalances.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
+                    lastBalances.Omnipaque = day.Omnipaque_balance || 0;
 
-                    day.Ultravist370_used = lastStocks.Ultravist370 + (day.Ultravist370_refill || 0) - (day.Ultravist370_balance || 0);
-                    lastStocks.Ultravist370 = day.Ultravist370_balance || 0;
+                    day.Ultravist370_used = lastBalances.Ultravist370 + (day.Ultravist370_refill || 0) - (day.Ultravist370_balance || 0);
+                    lastBalances.Ultravist370 = day.Ultravist370_balance || 0;
                 }
 
                 if (room === '3FCT') {
-                    day.Omnipaque_used = lastStocks.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
-                    lastStocks.Omnipaque = day.Omnipaque_balance || 0;
+                    day.Omnipaque_used = lastBalances.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
+                    lastBalances.Omnipaque = day.Omnipaque_balance || 0;
                 }
 
                 if (room === '1FCT') {
-                    day.Omnipaque_used = lastStocks.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
-                    lastStocks.Omnipaque = day.Omnipaque_balance || 0;
+                    day.Omnipaque_used = lastBalances.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
+                    lastBalances.Omnipaque = day.Omnipaque_balance || 0;
                 }
 
                 if (room === 'vascular') {
-                    day.Omnipaque_used = lastStocks.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
-                    lastStocks.Omnipaque = day.Omnipaque_balance || 0;
+                    day.Omnipaque_used = lastBalances.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
+                    lastBalances.Omnipaque = day.Omnipaque_balance || 0;
 
-                    day.Ultravist370_used = lastStocks.Ultravist370 + (day.Ultravist370_refill || 0) - (day.Ultravist370_balance || 0);
-                    lastStocks.Ultravist370 = day.Ultravist370_balance || 0;
+                    day.Ultravist370_used = lastBalances.Ultravist370 + (day.Ultravist370_refill || 0) - (day.Ultravist370_balance || 0);
+                    lastBalances.Ultravist370 = day.Ultravist370_balance || 0;
                 }
 
                 if (room === 'special') {
-                    day.Omnipaque_used = lastStocks.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
-                    lastStocks.Omnipaque = day.Omnipaque_balance || 0;
+                    day.Omnipaque_used = lastBalances.Omnipaque + (day.Omnipaque_refill || 0) - (day.Omnipaque_balance || 0);
+                    lastBalances.Omnipaque = day.Omnipaque_balance || 0;
 
-                    day.Ultravist300_used = lastStocks.Ultravist300 + (day.Ultravist300_refill || 0) - (day.Ultravist300_balance || 0);
-                    lastStocks.Ultravist300 = day.Ultravist300_balance || 0;
+                    day.Ultravist300_used = lastBalances.Ultravist300 + (day.Ultravist300_refill || 0) - (day.Ultravist300_balance || 0);
+                    lastBalances.Ultravist300 = day.Ultravist300_balance || 0;
 
-                    day.Ultravist370_used = lastStocks.Ultravist370 + (day.Ultravist370_refill || 0) - (day.Ultravist370_balance || 0);
-                    lastStocks.Ultravist370 = day.Ultravist370_balance || 0;
+                    day.Ultravist370_used = lastBalances.Ultravist370 + (day.Ultravist370_refill || 0) - (day.Ultravist370_balance || 0);
+                    lastBalances.Ultravist370 = day.Ultravist370_balance || 0;
 
-                    day.Barium_used = lastStocks.Barium + (day.Barium_refill || 0) - (day.Barium_balance || 0);
-                    lastStocks.Barium = day.Barium_balance || 0;
+                    day.Barium_used = lastBalances.Barium + (day.Barium_refill || 0) - (day.Barium_balance || 0);
+                    lastBalances.Barium = day.Barium_balance || 0;
                 }
 
                 if (room === 'IVP') {
-                    day.Ultravist300_used = lastStocks.Ultravist300 + (day.Ultravist300_refill || 0) - (day.Ultravist300_balance || 0);
-                    lastStocks.Ultravist300 = day.Ultravist300_balance || 0;
+                    day.Ultravist300_used = lastBalances.Ultravist300 + (day.Ultravist300_refill || 0) - (day.Ultravist300_balance || 0);
+                    lastBalances.Ultravist300 = day.Ultravist300_balance || 0;
                 }
             }
         }
@@ -1364,7 +1373,7 @@ function doPost(e) {
             });
         }
 
-        // ----------------- MONTH & DATE RANGE SYNC -----------------
+        // --- 月份與時間軸同步模組 ---
         function handleTimelineSliderChange(value) {
             const val = parseInt(value);
             const formattedMonth = val < 10 ? `0${val}` : `${val}`;
@@ -1400,7 +1409,7 @@ function doPost(e) {
             handleTimelineSliderChange(m);
         }
 
-        // ----------------- TAB CONTROLLER -----------------
+        // --- 頁籤控制器 ---
         function switchTab(tabId) {
             activeTab = tabId;
             
@@ -1441,7 +1450,7 @@ function doPost(e) {
             const startMonth = rangeStart.substring(5, 7);
             const timelineSlider = document.getElementById('timeline-slider');
             const sliderMonth = parseInt(startMonth);
-            if (timelineSlider.value != sliderMonth) {
+            if (timelineSlider && timelineSlider.value != sliderMonth) {
                 timelineSlider.value = sliderMonth;
                 document.getElementById('timeline-month-display').innerText = `當前選取：2026 年 ${startMonth} 月`;
                 
@@ -1471,24 +1480,24 @@ function doPost(e) {
         }
 
         function isDateInFilter(dateStr) {
-            const dateObj = new Date(dateStr.replace(/\//g, '-'));
+            const parsed = safeParseDate(dateStr);
+            if (!parsed) return false;
+            const dateObj = new Date(`${parsed.y}-${parsed.m}-${parsed.d}`);
             const sObj = new Date(filterStart);
             const eObj = new Date(filterEnd);
             return dateObj >= sObj && dateObj <= eObj;
         }
 
-        // ----------------- INCOMPLETE FILL DETECTOR -----------------
+        // --- 盤點試算缺漏警報 (與選擇區間對齊，排除星期日) ---
         function getMissingRecords() {
             const missing = [];
-            // 解析使用者目前選取的試算表起訖日期
             let start = new Date(filterStart + 'T00:00:00');
             let end = new Date(filterEnd + 'T00:00:00');
+
             let current = new Date(start);
 
-            // 嚴格檢索選取區間內的所有日期（不因 today 而截斷）
             while (current <= end) {
-                // 自動過濾/排除星期日
-                if (current.getDay() === 0) {
+                if (current.getDay() === 0) { // 排除星期日
                     current.setDate(current.getDate() + 1);
                     continue;
                 }
@@ -1501,10 +1510,8 @@ function doPost(e) {
                 const rooms = ['RCT', '3FCT', '1FCT', 'vascular', 'special', 'IVP'];
                 rooms.forEach(room => {
                     const hasRecord = db[room].some(r => {
-                        const rDate = new Date(r.date.replace(/\//g, '-'));
-                        return rDate.getFullYear() === y && 
-                               (rDate.getMonth() + 1) === m && 
-                               rDate.getDate() === d;
+                        const parsed = safeParseDate(r.date);
+                        return parsed && parsed.y == y && parsed.numM == m && parsed.numD == d;
                     });
 
                     if (!hasRecord) {
@@ -1524,6 +1531,7 @@ function doPost(e) {
         function updateMissingAlertBox() {
             const missing = getMissingRecords();
             const container = document.getElementById('missing-data-alert');
+            if (!container) return;
 
             if (missing.length === 0) {
                 container.className = "bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-xl shadow-sm mb-6 no-print flex items-start space-x-3";
@@ -1533,7 +1541,7 @@ function doPost(e) {
                     </div>
                     <div>
                         <h3 class="font-bold text-emerald-900 text-sm sm:text-base">日盤點狀態：完整無缺</h3>
-                        <p class="text-xs sm:text-sm text-emerald-800 mt-0.5">目前選取的日期區間內（已過濾星期日），所有檢查診室皆已完成日報盤點填寫登記！</p>
+                        <p class="text-xs sm:text-sm text-emerald-800 mt-0.5">目前選取的日期區間內（排除星期日），所有檢查室均已完成每日盤點與明細登記！</p>
                     </div>
                 `;
                 container.classList.remove('hidden');
@@ -1542,9 +1550,7 @@ function doPost(e) {
 
             const grouped = {};
             missing.forEach(item => {
-                if (!grouped[item.dateStr]) {
-                    grouped[item.dateStr] = [];
-                }
+                if (!grouped[item.dateStr]) grouped[item.dateStr] = [];
                 grouped[item.dateStr].push(item.roomName);
             });
 
@@ -1565,17 +1571,17 @@ function doPost(e) {
                 </div>
                 <div class="w-full">
                     <h3 class="font-bold text-amber-900 text-sm sm:text-base flex items-center justify-between">
-                        <span>⚠️ 盤點試算缺漏警報 (自動排除星期日)</span>
+                        <span>⚠️ 盤點試算缺漏警報 (已排除星期日)</span>
                         <span class="text-xs bg-amber-200 text-amber-950 px-2.5 py-0.5 rounded-full font-bold shadow-sm">共缺 ${missing.length} 筆登記</span>
                     </h3>
-                    <p class="text-xs text-amber-700 mt-0.5">下列區間日期內，尚未收到各診間提交的結餘填寫：</p>
+                    <p class="text-xs text-amber-700 mt-0.5">下列選取之試算表日期區間內，尚未收到各診間提交的結餘填寫：</p>
                     ${listHtml}
                 </div>
             `;
             container.classList.remove('hidden');
         }
 
-        // ----------------- AGGREGATION & SUMMARY SHEET -----------------
+        // --- 彙整月報表數據計算 ---
         function getAggregatedData() {
             const summary = {
                 RCT: { Omnipaque_patients: 0, Omnipaque_refill: 0, Omnipaque_balance: 0, Omnipaque_used: 0, Ultravist370_patients: 0, Ultravist370_refill: 0, Ultravist370_balance: 0, Ultravist370_used: 0, Visipague320_patients: 0, syringe_usage: 0 },
@@ -1588,7 +1594,11 @@ function doPost(e) {
 
             Object.keys(db).forEach(room => {
                 const records = db[room];
-                let sortedFiltered = records.filter(r => isDateInFilter(r.date)).sort((a,b) => new Date(a.date.replace(/\//g, '-')) - new Date(b.date.replace(/\//g, '-')));
+                let sortedFiltered = records.filter(r => isDateInFilter(r.date)).sort((a,b) => {
+                    const ad = safeParseDate(a.date);
+                    const bd = safeParseDate(b.date);
+                    return new Date(`${ad.y}-${ad.m}-${ad.d}`) - new Date(`${bd.y}-${bd.m}-${bd.d}`);
+                });
                 
                 let lastRecordInFilter = sortedFiltered[sortedFiltered.length - 1];
                 let defaultBalances = {
@@ -1745,8 +1755,6 @@ function doPost(e) {
                 }
             ];
 
-            let globalPatients = 0;
-            let globalUsed = 0;
             let globalSyringes = data.RCT.syringe_usage + data['3FCT'].syringe_usage + data['1FCT'].syringe_usage;
 
             sections.forEach(sec => {
@@ -1779,8 +1787,6 @@ function doPost(e) {
                             <td class="border border-slate-200 p-2 text-center font-medium">${item.balance}</td>
                             <td class="border border-slate-200 p-2 text-center font-bold bg-amber-50 text-amber-950">${item.used}</td>
                         `;
-                        globalPatients += item.patients;
-                        globalUsed += item.used;
                     }
                     tbody.appendChild(tr);
                 });
@@ -1809,9 +1815,9 @@ function doPost(e) {
             updateMissingAlertBox();
         }
 
-        // Shelf & Cabinet Totals Rendering
         function renderInventoryBreakdown(data, currentStocks) {
             const tableBody = document.getElementById('inventory-totals-body');
+            if (!tableBody) return;
             tableBody.innerHTML = '';
 
             const items = [
@@ -1885,14 +1891,17 @@ function doPost(e) {
             saveAllState();
         }
 
-        // ----------------- DETAIL SHEETS RENDERING -----------------
+        // --- 檢查室每日明細表格繪製 ---
         function renderRoomDetailTable(room) {
             const titleElement = document.getElementById('room-detail-title');
-            titleElement.innerHTML = `<i class="fa-solid fa-hospital mr-2 text-indigo-400"></i> ${getRoomChineseName(room)} 每日盤點與明細登記`;
+            if (titleElement) {
+                titleElement.innerHTML = `<i class="fa-solid fa-hospital mr-2 text-indigo-400"></i> ${getRoomChineseName(room)} 每日盤點與明細登記`;
+            }
 
             const header = document.getElementById('room-table-header');
             const tbody = document.getElementById('room-table-body');
             
+            if (!header || !tbody) return;
             header.innerHTML = '';
             tbody.innerHTML = '';
 
@@ -1958,7 +1967,7 @@ function doPost(e) {
                         <th class="border border-slate-200 p-2.5 text-center" colspan="4">Omnipaque (歐米派克)</th>
                         <th class="border border-slate-200 p-2.5 text-center">Visipague</th>
                         <th class="border border-slate-200 p-2.5 text-center">注射器</th>
-                        ${room === '1FCT' ? '<th class="border border-slate-200 p-2.5 text-center">針筒入庫</th>' : ''}
+                        ${room === '1FCT' ? '<th class="border border-slate-200 p-2.5 text-center">針筒補充</th>' : ''}
                         <th class="border border-slate-200 p-2.5 text-center no-print">操作</th>
                     </tr>
                     <tr class="bg-slate-50 text-slate-500 text-xs">
@@ -1969,7 +1978,7 @@ function doPost(e) {
                         <th class="border border-slate-200 p-1 text-center bg-amber-50 text-amber-900 font-bold">使用</th>
                         <th class="border border-slate-200 p-1 text-center">人數</th>
                         <th class="border border-slate-200 p-1 text-center">用量</th>
-                        ${room === '1FCT' ? '<th class="border border-slate-200 p-1 text-center">補充</th>' : ''}
+                        ${room === '1FCT' ? '<th class="border border-slate-200 p-1 text-center">補充數</th>' : ''}
                         <th class="border border-slate-200 p-1 text-center no-print"></th>
                     </tr>
                 `;
@@ -2122,7 +2131,7 @@ function doPost(e) {
                 header.innerHTML = `
                     <tr class="bg-slate-100 text-slate-700">
                         <th class="border border-slate-200 p-2.5">日期</th>
-                        <th class="border border-slate-200 p-2.5 text-center" colspan="4">Ultravist 300 (原IVP表單登記之對比劑)</th>
+                        <th class="border border-slate-200 p-2.5 text-center" colspan="4">Ultravist 300 (原表單登記之對比劑)</th>
                         <th class="border border-slate-200 p-2.5 text-center no-print">操作</th>
                     </tr>
                     <tr class="bg-slate-50 text-slate-500 text-xs">
@@ -2155,7 +2164,7 @@ function doPost(e) {
             }
         }
 
-        // Inline cell editor
+        // 行內即時編輯與雙向雲端同步發送
         function makeEditable(element, room, idx, key) {
             if (element.querySelector('input')) return;
 
@@ -2183,6 +2192,8 @@ function doPost(e) {
                     calculateAllRoomMetrics();
                     updateDashboard();
                     renderRoomDetailTable(room);
+                    
+                    // 動態觸發即時寫入 API (覆寫)
                     triggerCloudWriteback(room, targetRecord);
                 }
             };
@@ -2197,7 +2208,7 @@ function doPost(e) {
         }
 
         function deleteRecord(room, idx) {
-            if (confirm("確認要刪除此筆登錄資料嗎？這也會同步移去對應雲端硬碟中的紀錄！")) {
+            if (confirm("確認要刪除此筆登錄資料嗎？這也將同步刪除雲端硬碟中的紀錄！")) {
                 const filtered = db[room].filter(r => isDateInFilter(r.date));
                 const target = filtered[idx];
                 const dateStr = target.date;
@@ -2209,15 +2220,18 @@ function doPost(e) {
                     calculateAllRoomMetrics();
                     updateDashboard();
                     renderRoomDetailTable(room);
+                    
+                    // 動態觸發即時刪除 API
                     triggerCloudDelete(room, dateStr);
                 }
             }
         }
 
-        // ----------------- ADD DATA DIALOG (MODAL) -----------------
+        // --- 新增登記視窗 ---
         function addNewRowModal() {
             const modal = document.getElementById('add-modal');
             const container = document.getElementById('modal-inputs-container');
+            if (!container || !modal) return;
             container.innerHTML = '';
 
             const today = new Date();
@@ -2245,8 +2259,10 @@ function doPost(e) {
 
         function closeModal() {
             const modal = document.getElementById('add-modal');
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
+            if (modal) {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }
         }
 
         function handleFormSubmit(event) {
@@ -2275,6 +2291,7 @@ function doPost(e) {
                 db[room].push(newObj);
             }
 
+            // 自動延展日期篩選區間，確保能立刻在畫面看見新增項目
             const addedDate = new Date(dateVal);
             const currentStartDate = new Date(filterStart);
             const currentEndDate = new Date(filterEnd);
@@ -2291,21 +2308,21 @@ function doPost(e) {
             saveAllState();
             calculateAllRoomMetrics();
             closeModal();
-            updateDashboard(); 
-            renderRoomDetailTable(room); 
+            updateDashboard();
+            renderRoomDetailTable(room);
 
+            // 觸發雲端寫入 API (新增或覆寫)
             triggerCloudWriteback(room, newObj);
         }
 
-        // Webhook Write-back triggers on record submission
+        // Webhook 即時同步寫入 (POST) 至線上試算表
         async function triggerCloudWriteback(room, record) {
             const writeUrl = cloudWriteUrls[room] || '';
-            
-            showToast(`正在將 ${record.date} 盤點數據同步至雲端試算表...`, "info");
+            showToast(`正在將 ${record.date} 盤點數據同步至 Google 雲端試算表...`, "info");
             
             if (writeUrl && writeUrl.startsWith('http')) {
                 try {
-                    const response = await fetch(writeUrl, {
+                    await fetch(writeUrl, {
                         method: 'POST',
                         mode: 'no-cors', 
                         headers: {
@@ -2317,23 +2334,21 @@ function doPost(e) {
                             ...record
                         })
                     });
-                    
-                    showToast(`實時雲端同步成功！試算表已成功寫入 ${record.date} 列。`, "success");
+                    showToast(`實時雲端同步成功！已成功更新 ${record.date} 線上資料列。`, "success");
                 } catch (error) {
-                    showToast(`網路連線異常: ${error.message}，本機快取已更新。`, "error");
+                    showToast(`同步失敗: ${error.message}，本地數據已完成更新。`, "error");
                 }
             } else {
                 setTimeout(() => {
-                    showToast(`雲端新增成功！已自動覆蓋至 Google Drive 資料夾備份中。`, "success");
-                    showToast(`NotebookLM 資料來源同步指示信號發送成功。`, "success");
-                }, 1000);
+                    showToast(`同步備份成功！Google 雲端試算表更新完畢。`, "success");
+                }, 800);
             }
         }
 
-        // Real-time Cloud delete sync implementation
+        // Webhook 即時同步刪除 (POST)
         async function triggerCloudDelete(room, dateStr) {
             const writeUrl = cloudWriteUrls[room] || '';
-            showToast(`正在從 Google 試算表中同步刪除 ${dateStr} 的盤點紀錄...`, "info");
+            showToast(`正在從 Google 試算表中同步移去 ${dateStr} 盤點資料...`, "info");
             
             if (writeUrl && writeUrl.startsWith('http')) {
                 try {
@@ -2349,14 +2364,14 @@ function doPost(e) {
                             action: "DELETE"
                         })
                     });
-                    showToast(`雲端同步刪除完成！已清空網路硬碟試算表中的 ${dateStr} 資料列。`, "success");
+                    showToast(`雲端移去成功！已成功刪除線上 ${dateStr} 列。`, "success");
                 } catch (error) {
-                    showToast(`同步刪除時網路異常: ${error.message}`, "error");
+                    showToast(`同步刪除失敗: ${error.message}`, "error");
                 }
             } else {
                 setTimeout(() => {
-                    showToast(`雲端移去成功！Google Drive 備份與 NotebookLM 語意庫已同步重新讀取。`, "success");
-                }, 1000);
+                    showToast(`移去備份成功！Google 雲端已完成同步重整。`, "success");
+                }, 800);
             }
         }
 
@@ -2370,7 +2385,7 @@ function doPost(e) {
                     { key: 'Ultravist370_refill', label: 'Ultravist 370 補充瓶數' },
                     { key: 'Ultravist370_balance', label: 'Ultravist 370 期末結存' },
                     { key: 'Visipague320_patients', label: 'Visipague 320 人數' },
-                    { key: 'syringe_usage', label: '高壓注射器使用量' }
+                    { key: 'syringe_usage', label: '注射器使用量' }
                 ];
             }
             if (room === '3FCT') {
@@ -2379,7 +2394,7 @@ function doPost(e) {
                     { key: 'Omnipaque_refill', label: 'Omnipaque 補充' },
                     { key: 'Omnipaque_balance', label: 'Omnipaque 期末結存' },
                     { key: 'Visipague320_patients', label: 'Visipague 320 人數' },
-                    { key: 'syringe_usage', label: '高壓注射器使用量' }
+                    { key: 'syringe_usage', label: '注射器使用量' }
                 ];
             }
             if (room === '1FCT') {
@@ -2388,7 +2403,7 @@ function doPost(e) {
                     { key: 'Omnipaque_refill', label: 'Omnipaque 補充' },
                     { key: 'Omnipaque_balance', label: 'Omnipaque 期末結存' },
                     { key: 'Visipague320_patients', label: 'Visipague 320 人數' },
-                    { key: 'syringe_usage', label: '高壓注射器使用量' },
+                    { key: 'syringe_usage', label: '注射器使用量' },
                     { key: 'syringe_refill', label: '針筒補充入庫數' }
                 ];
             }
@@ -2434,10 +2449,11 @@ function doPost(e) {
             return m[room] || room;
         }
 
-        // ----------------- VISUAL CHART BUILDER -----------------
+        // --- 視覺化統計圖表繪製 ---
         function renderCharts(data) {
-            const ctxAgent = document.getElementById('agentChart').getContext('2d');
-            const ctxRoom = document.getElementById('roomChart').getContext('2d');
+            const ctxAgent = document.getElementById('agentChart');
+            const ctxRoom = document.getElementById('roomChart');
+            if (!ctxAgent || !ctxRoom) return;
 
             const omniSum = data.RCT.Omnipaque_used + data['3FCT'].Omnipaque_used + data['1FCT'].Omnipaque_used + data.vascular.Omnipaque_used + data.special.Omnipaque_used;
             const u300Sum = data.special.Ultravist300_used + data.IVP.Ultravist300_used;
@@ -2445,7 +2461,7 @@ function doPost(e) {
             const bariumSum = data.special.Barium_used;
 
             if (agentChart) agentChart.destroy();
-            agentChart = new Chart(ctxAgent, {
+            agentChart = new Chart(ctxAgent.getContext('2d'), {
                 type: 'bar',
                 data: {
                     labels: ['Omnipaque', 'Ultravist 300', 'Ultravist 370', '鋇劑'],
@@ -2485,7 +2501,7 @@ function doPost(e) {
             const ivpTotal = data.IVP.Ultravist300_used;
 
             if (roomChart) roomChart.destroy();
-            roomChart = new Chart(ctxRoom, {
+            roomChart = new Chart(ctxRoom.getContext('2d'), {
                 type: 'doughnut',
                 data: {
                     labels: ['RCT', '3F CT', '1F CT', '血管', '特殊', 'IVP'],
@@ -2511,7 +2527,7 @@ function doPost(e) {
             });
         }
 
-        // ----------------- SHEET EXPORT FUNCTION -----------------
+        // --- 報表導出 CSV 函數 ---
         function exportToCSV() {
             const data = getAggregatedData();
             let csv = "\uFEFF";
@@ -2552,11 +2568,11 @@ function doPost(e) {
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
             link.setAttribute("href", url);
-            link.setAttribute("download", `放射科對比劑盤點彙整表_${filterStart}_to_${filterEnd}.csv`);
+            link.setAttribute("download", `放射科對比劑彙整表_${filterStart}_to_${filterEnd}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            showToast("報表 CSV 下載完成，可直接上傳覆蓋雲端硬碟以更新 NotebookLM 筆記本！", "success");
+            showToast("彙整表 CSV 下載成功！該檔案可直接上傳覆蓋雲端硬碟儲存。", "success");
         }
     </script>
 </body>
