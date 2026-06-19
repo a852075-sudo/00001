@@ -1027,7 +1027,7 @@
                 
                 Object.keys(map).forEach(key => {
                     const matchers = map[key];
-                    const colIdx = headers.findIndex((h, idx) => matchers.some(p => h.includes(p) || normalizedHeaders[idx].includes(normalizeHeader(p))));
+                    const colIdx = findCsvColumnIndex(room, key, headers, normalizedHeaders, matchers, normalizeHeader);
                     if (colIdx !== -1 && cols[colIdx] !== undefined) {
                         const val = parseInt(cols[colIdx]);
                         recordObj[key] = isNaN(val) ? 0 : val;
@@ -1045,6 +1045,22 @@
                 return importedRecords.length;
             }
             return 0;
+        }
+
+        function findCsvColumnIndex(room, key, headers, normalizedHeaders, matchers, normalizeHeader) {
+            const exactMappings = {
+                RCT: {
+                    "Ultravist370_patients": ["ultravist 370 使用人數", "ultravist 370 (優視特 370)使用人數", "ultravist 370 (優視特 370) 使用人數"],
+                    "Ultravist370_refill": ["ultravist 370 藥品補充", "ultravist 370 (優視特 370)藥品補充", "ultravist 370 (優視特 370) 藥品補充"],
+                    "Ultravist370_balance": ["ultravist 370 結存量", "ultravist 370 (優視特 370)結存量", "ultravist 370 (優視特 370) 結存量"]
+                }
+            };
+
+            const exactHeaders = exactMappings[room]?.[key] || [];
+            const exactIdx = normalizedHeaders.findIndex(h => exactHeaders.some(p => h === normalizeHeader(p)));
+            if (exactIdx !== -1) return exactIdx;
+
+            return headers.findIndex((h, idx) => matchers.some(p => h.includes(p) || normalizedHeaders[idx].includes(normalizeHeader(p))));
         }
 
         function getFieldMappingsForRoom(room) {
@@ -2537,11 +2553,7 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({
-                            room: room,
-                            roomName: getRoomChineseName(room),
-                            ...record
-                        })
+                        body: JSON.stringify(buildCloudWritePayload(room, record))
                     });
                     showToast(`實時雲端同步成功！已成功更新 ${record.date} 線上資料列。`, "success");
                 } catch (error) {
@@ -2552,6 +2564,22 @@
                     showToast(`同步備份成功！Google 雲端試算表更新完畢。`, "success");
                 }, 800);
             }
+        }
+
+        function buildCloudWritePayload(room, record) {
+            const payload = {
+                room: room,
+                roomName: getRoomChineseName(room),
+                ...record
+            };
+
+            if (room === 'RCT') {
+                payload["Ultravist 370 (優視特 370)使用人數"] = record.Ultravist370_patients || 0;
+                payload["Ultravist 370 (優視特 370)藥品補充"] = record.Ultravist370_refill || 0;
+                payload["Ultravist 370 (優視特 370)結存量"] = record.Ultravist370_balance || 0;
+            }
+
+            return payload;
         }
 
         // Webhook 即時同步刪除 (POST)
